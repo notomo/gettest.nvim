@@ -1,0 +1,50 @@
+*gettest.nvim.txt*
+
+==============================================================================
+Lua module: gettest                                     *gettest.nvim-gettest*
+
+all_leaves({opts})                                      *gettest.all_leaves()*
+  Get all test tree leaves in the buffer.
+
+  Parameters: ~
+    {opts} (table|nil) |gettest.nvim-opts|
+
+  Return: ~
+    (table) list of |gettest.nvim-test-leaf|
+
+==============================================================================
+TYPES                                                     *gettest.nvim-TYPES*
+
+options for get methods                                    *gettest.nvim-opts*
+
+- {bufnr} (number | nil): target buffer number.
+    default: 0
+- {language} (string | nil): treesitter parser language.
+    default: filetype
+- {tool_name} (string | nil): test framework name.
+
+test leaf                                             *gettest.nvim-test-leaf*
+
+- {name} (string): test name
+- {scope_node} (userdata):  for example test function's node.
+    |lua-treesitter-node|
+
+==============================================================================
+SUPPORTED TOOLS                                 *gettest.nvim-SUPPORTED-TOOLS*
+
+- go: `go test`
+- lua: `busted`
+
+==============================================================================
+EXAMPLES                                               *gettest.nvim-EXAMPLES*
+
+>
+  local tests = require("gettest").all_leaves()
+  for _, test in ipairs(tests) do
+    print(test.name)
+    print(test.scope_node:start() + 1) -- test scope start row (1-index)
+  end
+<
+
+==============================================================================
+vim:tw=78:ts=8:ft=help
