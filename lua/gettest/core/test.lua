@@ -80,4 +80,15 @@ function M.smallest(self, row)
   end
 end
 
+function M.largest(self, row)
+  local first_layer = self._layers[1]
+  if not first_layer then
+    return nil
+  end
+  if not first_layer:contains_row(row) then
+    return nil
+  end
+  return M.new({ first_layer })
+end
+
 return M

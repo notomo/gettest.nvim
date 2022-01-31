@@ -84,4 +84,38 @@ end)
     }
     assert.test_value(test, want)
   end)
+
+  it("works gettest.scope_root_node()", function()
+    helper.install_parser(language)
+
+    helper.set_lines([[
+describe('method1()', function ()
+  it('should return 11', function ()
+    return 11
+  end)
+
+  describe('12', function ()
+    it('should return 121', function ()
+      return 121
+    end)
+  end)
+end)
+
+describe('method2()', function ()
+  it('should return 21', function ()
+    return 21
+  end)
+end)
+]])
+    vim.bo.filetype = language
+
+    local row = helper.get_row([[\v^\s+return 121]])
+    local test = gettest.scope_root_node(row)
+
+    local want = {
+      name = "method1()",
+      row = helper.get_row("method1"),
+    }
+    assert.test_value(test, want)
+  end)
 end)

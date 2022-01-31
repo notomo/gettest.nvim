@@ -4,7 +4,7 @@
 Lua module: gettest                                     *gettest.nvim-gettest*
 
 all_leaves({opts})                                      *gettest.all_leaves()*
-  Get all test tree leaves in the buffer.
+  Get all test tree leaves.
 
   Parameters: ~
     {opts} (table|nil) |gettest.nvim-opts|
@@ -13,7 +13,17 @@ all_leaves({opts})                                      *gettest.all_leaves()*
     (table) list of |gettest.nvim-test-leaf|
 
 one_node({row}, {opts})                                   *gettest.one_node()*
-  Get a test node in the buffer.
+  Get a test node from the row.
+
+  Parameters: ~
+    {row} (number) the row to specify a test scope (1-index)
+    {opts} (table|nil) |gettest.nvim-opts|
+
+  Return: ~
+    (table) |gettest.nvim-test-leaf|
+
+scope_root_node({row}, {opts})                     *gettest.scope_root_node()*
+  Get a root test node of the scope from the row.
 
   Parameters: ~
     {row} (number) the row to specify a test scope (1-index)
