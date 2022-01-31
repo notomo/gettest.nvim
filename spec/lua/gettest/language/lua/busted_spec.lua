@@ -118,4 +118,52 @@ end)
     }
     assert.test_value(test, want)
   end)
+
+  it("works gettest.scope_root_leaves()", function()
+    helper.install_parser(language)
+
+    helper.set_lines([[
+describe('method1()', function ()
+  it('should return 11', function ()
+    return 11
+  end)
+
+  describe('12', function ()
+    it('should return 121', function ()
+      return 121
+    end)
+  end)
+
+  it('should return 13', function ()
+    return 13
+  end)
+end)
+
+describe('method2()', function ()
+  it('should return 21', function ()
+    return 21
+  end)
+end)
+]])
+    vim.bo.filetype = language
+
+    local row = helper.get_row([[\v^\s+return 121]])
+
+    local tests = gettest.scope_root_leaves(row)
+    local want = {
+      {
+        name = "method1() should return 11",
+        row = helper.get_row("should return 11"),
+      },
+      {
+        name = "method1() 12 should return 121",
+        row = helper.get_row("should return 121"),
+      },
+      {
+        name = "method1() should return 13",
+        row = helper.get_row("should return 13"),
+      },
+    }
+    assert.test_values(tests, want)
+  end)
 end)

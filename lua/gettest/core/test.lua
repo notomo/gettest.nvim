@@ -91,4 +91,16 @@ function M.largest(self, row)
   return M.new({ first_layer })
 end
 
+function M.contains(self, test)
+  local scope_layer = self._layers[#self._layers]
+  if not scope_layer then
+    return false
+  end
+  local layer = test._layers[#test._layers]
+  if not layer then
+    return false
+  end
+  return scope_layer:contains(layer)
+end
+
 return M

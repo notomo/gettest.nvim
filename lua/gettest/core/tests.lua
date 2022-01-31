@@ -38,6 +38,25 @@ function M.map(self, f)
   end, self._tests)
 end
 
+function M.filter_by_scope(self, scope_test)
+  local raw_tests = {}
+  for _, test in ipairs(self._tests) do
+    if scope_test:contains(test) then
+      table.insert(raw_tests, test)
+    end
+  end
+  return M.new(raw_tests)
+end
+
+function M.get_one_by_row(self, row)
+  for _, test in ipairs(self._tests) do
+    local target = test:largest(row)
+    if target then
+      return target
+    end
+  end
+end
+
 function M.last(self)
   return self._tests[#self._tests]
 end
