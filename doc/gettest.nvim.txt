@@ -12,6 +12,16 @@ all_leaves({opts})                                      *gettest.all_leaves()*
   Return: ~
     (table) list of |gettest.nvim-test-leaf|
 
+one_node({row}, {opts})                                   *gettest.one_node()*
+  Get a test node in the buffer.
+
+  Parameters: ~
+    {row} (number) the row to specify a test scope (1-index)
+    {opts} (table|nil) |gettest.nvim-opts|
+
+  Return: ~
+    (table) |gettest.nvim-test-leaf|
+
 ==============================================================================
 TYPES                                                     *gettest.nvim-TYPES*
 
@@ -44,6 +54,10 @@ EXAMPLES                                               *gettest.nvim-EXAMPLES*
     print(test.name)
     print(test.scope_node:start() + 1) -- test scope start row (1-index)
   end
+
+  local test = require("gettest").one_node(vim.fn.line("."))
+  print(test.name)
+  print(test.scope_node:start() + 1)
 <
 
 ==============================================================================

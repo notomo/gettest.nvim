@@ -14,4 +14,20 @@ function ReturnValue.all(raw_opts)
   return require("gettest.view.output").expose(tests, opts.bufnr, opts.language, opts.tool.separator)
 end
 
+function ReturnValue.one(row, raw_opts)
+  vim.validate({ row = { row, "number" } })
+
+  local opts, opts_err = require("gettest.core.option").new(raw_opts)
+  if opts_err then
+    return nil, opts_err
+  end
+
+  local tests, err = require("gettest.core").collect_one(row, opts.bufnr, opts.language, opts.tool.name)
+  if err then
+    return nil, err
+  end
+
+  return require("gettest.view.output").expose(tests, opts.bufnr, opts.language, opts.tool.separator)[1]
+end
+
 return ReturnValue:methods()

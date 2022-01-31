@@ -27,6 +27,11 @@ function M.contains(scope, node)
   return parent_sc <= child_sc and child_ec <= parent_ec
 end
 
+function M.contains_row(scope, row)
+  local s, _, e, _ = scope:range()
+  return s <= row and row <= e
+end
+
 function M.get_captures(match, query, handlers)
   local captures = {}
   for id, node in pairs(match) do

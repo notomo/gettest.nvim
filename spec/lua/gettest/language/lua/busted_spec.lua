@@ -56,4 +56,32 @@ end)
     }
     assert.test_values(tests, want)
   end)
+
+  it("works gettest.one_node()", function()
+    helper.install_parser(language)
+
+    helper.set_lines([[
+describe('method1()', function ()
+  it('should return 11', function ()
+    return 11
+  end)
+
+  describe('12', function ()
+    it('should return 121', function ()
+      return 121
+    end)
+  end)
+end)
+]])
+    vim.bo.filetype = language
+
+    local row = helper.get_row([[\v^\s+return 121]])
+    local test = gettest.one_node(row)
+
+    local want = {
+      name = "method1() 12 should return 121",
+      row = helper.get_row("should return 121"),
+    }
+    assert.test_value(test, want)
+  end)
 end)

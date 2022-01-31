@@ -38,4 +38,8 @@ function M.map(self, f)
   end, self._tests)
 end
 
+function M.last(self)
+  return self._tests[#self._tests]
+end
+
 return M

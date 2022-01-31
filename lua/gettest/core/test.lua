@@ -69,4 +69,15 @@ function M.scope_node(self)
   return last_layer.scope_node
 end
 
+function M.smallest(self, row)
+  for i = #self._layers, 1, -1 do
+    local layer = self._layers[i]
+    if layer:contains_row(row) then
+      local layers = {}
+      vim.list_extend(layers, self._layers, 1, i)
+      return M.new(layers)
+    end
+  end
+end
+
 return M

@@ -49,4 +49,9 @@ asserts.create("test_values"):register_same(function(tests)
   end, tests)
 end)
 
+asserts.create("test_value"):register_same(function(test)
+  local row = test.scope_node:start()
+  return { name = test.name, row = row + 1 }
+end)
+
 return M
