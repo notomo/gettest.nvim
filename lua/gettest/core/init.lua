@@ -10,6 +10,8 @@ function M.collect_all_leaves(bufnr, language, tool_name)
 end
 
 function M.collect_scope_root_leaves(row, bufnr, language, tool_name)
+  vim.validate({ row = { row, "number" } })
+
   local root, err = require("gettest.lib.treesitter.node").get_first_tree_root(bufnr, language)
   if err then
     return nil, err
@@ -27,6 +29,8 @@ function M.collect_scope_root_leaves(row, bufnr, language, tool_name)
 end
 
 function M.collect_one(row, bufnr, language, tool_name)
+  vim.validate({ row = { row, "number" } })
+
   local root, err = require("gettest.lib.treesitter.node").get_first_tree_root(bufnr, language)
   if err then
     return nil, err
@@ -46,10 +50,12 @@ function M.collect_one(row, bufnr, language, tool_name)
     return nil, ("row=%d is not in the test scope"):format(row)
   end
 
-  return require("gettest.core.tests").new({ target_test })
+  return target_test
 end
 
 function M.collect_scope_root_node(row, bufnr, language, tool_name)
+  vim.validate({ row = { row, "number" } })
+
   local root, err = require("gettest.lib.treesitter.node").get_first_tree_root(bufnr, language)
   if err then
     return nil, err
@@ -69,7 +75,7 @@ function M.collect_scope_root_node(row, bufnr, language, tool_name)
     return nil, ("row=%d is not in the test scope"):format(row)
   end
 
-  return require("gettest.core.tests").new({ target_test })
+  return target_test
 end
 
 return M
