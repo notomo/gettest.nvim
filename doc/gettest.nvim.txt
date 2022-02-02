@@ -10,7 +10,8 @@ all_leaves({opts})                                      *gettest.all_leaves()*
     {opts} (table|nil) |gettest.nvim-opts|
 
   Return: ~
-    (table) list of |gettest.nvim-test-leaf|
+    (table|nil) list of |gettest.nvim-test-leaf|
+    (string|nil) error message if error
 
 scope_root_leaves({row}, {opts})                 *gettest.scope_root_leaves()*
   Get test leaves in root of the scope from the row.
@@ -20,7 +21,8 @@ scope_root_leaves({row}, {opts})                 *gettest.scope_root_leaves()*
     {opts} (table|nil) |gettest.nvim-opts|
 
   Return: ~
-    (table) list of |gettest.nvim-test-leaf|
+    (table|nil) list of |gettest.nvim-test-leaf|
+    (string|nil) error message if error
 
 one_node({row}, {opts})                                   *gettest.one_node()*
   Get a test node from the row.
@@ -30,7 +32,8 @@ one_node({row}, {opts})                                   *gettest.one_node()*
     {opts} (table|nil) |gettest.nvim-opts|
 
   Return: ~
-    (table) |gettest.nvim-test-leaf|
+    (table|nil) |gettest.nvim-test-leaf|
+    (string|nil) error message if error
 
 scope_root_node({row}, {opts})                     *gettest.scope_root_node()*
   Get a root test node of the scope from the row.
@@ -40,7 +43,8 @@ scope_root_node({row}, {opts})                     *gettest.scope_root_node()*
     {opts} (table|nil) |gettest.nvim-opts|
 
   Return: ~
-    (table) |gettest.nvim-test-leaf|
+    (table|nil) |gettest.nvim-test-leaf|
+    (string|nil) error message if error
 
 ==============================================================================
 TYPES                                                     *gettest.nvim-TYPES*

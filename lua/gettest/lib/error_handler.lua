@@ -18,8 +18,7 @@ function ErrorHandler.for_return_value()
       messagelib.error(result)
       return nil
     elseif err then
-      messagelib.warn(err)
-      return nil, err
+      return nil, messagelib.wrap(err)
     end
     return result
   end)

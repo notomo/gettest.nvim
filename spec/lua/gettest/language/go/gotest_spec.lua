@@ -35,7 +35,9 @@ func TestMethod3(t *testing.T) {
 ]])
     vim.bo.filetype = language
 
-    local tests = gettest.all_leaves()
+    local tests, err = gettest.all_leaves()
+    assert.is_nil(err)
+
     local want = {
       {
         name = "TestMethod1/should return 11",

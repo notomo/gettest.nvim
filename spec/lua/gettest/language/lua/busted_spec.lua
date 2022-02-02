@@ -35,7 +35,9 @@ end)
 ]])
     vim.bo.filetype = language
 
-    local tests = gettest.all_leaves()
+    local tests, err = gettest.all_leaves()
+    assert.is_nil(err)
+
     local want = {
       {
         name = "method1() should return 11",
@@ -76,7 +78,8 @@ end)
     vim.bo.filetype = language
 
     local row = helper.get_row([[\v^\s+return 121]])
-    local test = gettest.one_node(row)
+    local test, err = gettest.one_node(row)
+    assert.is_nil(err)
 
     local want = {
       name = "method1() 12 should return 121",
@@ -110,7 +113,8 @@ end)
     vim.bo.filetype = language
 
     local row = helper.get_row([[\v^\s+return 121]])
-    local test = gettest.scope_root_node(row)
+    local test, err = gettest.scope_root_node(row)
+    assert.is_nil(err)
 
     local want = {
       name = "method1()",
@@ -149,7 +153,9 @@ end)
 
     local row = helper.get_row([[\v^\s+return 121]])
 
-    local tests = gettest.scope_root_leaves(row)
+    local tests, err = gettest.scope_root_leaves(row)
+    assert.is_nil(err)
+
     local want = {
       {
         name = "method1() should return 11",
