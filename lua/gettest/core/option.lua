@@ -20,13 +20,11 @@ function M.new(raw_opts)
     opts.language = vim.bo[opts.bufnr].filetype
   end
 
-  if opts.tool_name == "" then
-    local tool, err = require("gettest.core.tool").from_name(opts.language, opts.tool_name)
-    if err then
-      return nil, err
-    end
-    opts.tool = tool
+  local tool, err = require("gettest.core.tool").from_name(opts.language, opts.tool_name)
+  if err then
+    return nil, err
   end
+  opts.tool = tool
 
   return opts
 end

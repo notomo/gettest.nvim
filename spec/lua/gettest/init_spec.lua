@@ -10,4 +10,11 @@ describe("all_leaves()", function()
     assert.is_nil(test)
     assert.equals("[gettest] no tools for language: ``", err)
   end)
+
+  it("returns error if there is no specified tools", function()
+    vim.bo.filetype = "lua"
+    local test, err = gettest.all_leaves({ tool_name = "invalid" })
+    assert.is_nil(test)
+    assert.equals("[gettest] no tool for tool_name: `invalid`", err)
+  end)
 end)
