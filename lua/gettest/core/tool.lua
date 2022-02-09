@@ -6,7 +6,7 @@ M.tools = {
     busted = { separator = " ", default = true },
   },
   go = {
-    gotest = { separator = "/", default = true, display_name = "go test" },
+    go_test = { separator = "/", default = true, display_name = "go test" },
   },
   typescript = {
     jest = { separator = " ", default = true },

@@ -3,7 +3,7 @@ local gettest = helper.require("gettest")
 
 local language = "go"
 
-describe("with gotest,", function()
+describe("with go_test,", function()
   before_each(helper.before_each)
   after_each(helper.after_each)
 
