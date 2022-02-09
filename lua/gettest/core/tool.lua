@@ -8,6 +8,12 @@ M.tools = {
   go = {
     gotest = { separator = "/", default = true, display_name = "go test" },
   },
+  typescript = {
+    jest = { separator = " ", default = true },
+  },
+  javascript = {
+    jest = { separator = " ", default = true },
+  },
 }
 
 function M.new(name, setting)

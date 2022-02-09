@@ -11,7 +11,9 @@ This plugin provides functions to get test structures.
 ## Supported
 
 - go: `go test`
+- javascript: `jest`
 - lua: `busted`
+- typescript: `jest`
 
 ## Example
 

@@ -21,7 +21,13 @@ local language_to_patterns = {
     { head = '"', tail = '"' },
     { head = "`", tail = "`", adjust = escape },
   },
+  javascript = {
+    { head = '"', tail = '"' },
+    { head = "'", tail = "'" },
+    { head = "`", tail = "`" },
+  },
 }
+language_to_patterns.typescript = language_to_patterns.javascript
 
 function M.new(language)
   vim.validate({ language = { language, "string" } })
