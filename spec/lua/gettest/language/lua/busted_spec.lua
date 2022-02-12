@@ -73,6 +73,10 @@ describe('method1()', function ()
       return 121
     end)
   end)
+
+  it('should return 13', function ()
+    return 13
+  end)
 end)
 ]])
     vim.bo.filetype = language

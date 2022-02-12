@@ -38,6 +38,10 @@ function M.map(self, f)
   end, self._tests)
 end
 
+function M.iter(self)
+  return ipairs(self._tests)
+end
+
 function M.filter_by_scope(self, scope_test)
   local raw_tests = {}
   for _, test in ipairs(self._tests) do
@@ -48,7 +52,7 @@ function M.filter_by_scope(self, scope_test)
   return M.new(raw_tests)
 end
 
-function M.get_one_by_row(self, row)
+function M.get_largest_by_row(self, row)
   for _, test in ipairs(self._tests) do
     local target = test:largest(row)
     if target then
@@ -57,8 +61,21 @@ function M.get_one_by_row(self, row)
   end
 end
 
-function M.last(self)
-  return self._tests[#self._tests]
+function M.get_smallest_by_row(self, row)
+  local largest = self:get_largest_by_row(row)
+  if not largest then
+    return nil
+  end
+
+  local compared = largest
+  local tests = self:filter_by_scope(largest)
+  for _, test in tests:iter() do
+    local target = test:smallest(row)
+    if compared:contains(target) then
+      compared = target
+    end
+  end
+  return compared
 end
 
 return M
