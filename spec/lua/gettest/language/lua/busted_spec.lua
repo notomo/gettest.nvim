@@ -42,18 +42,22 @@ end)
       {
         name = "method1() should return 11",
         row = helper.get_row("should return 11"),
+        is_leaf = true,
       },
       {
         name = "method1() 12 should return 121",
         row = helper.get_row("should return 121"),
+        is_leaf = true,
       },
       {
         name = "method2() should return 21",
         row = helper.get_row("should return 21"),
+        is_leaf = true,
       },
       {
         name = "method3()",
         row = helper.get_row("method3()"),
+        is_leaf = true,
       },
     }
     assert.test_values(tests, want)
@@ -69,9 +73,13 @@ describe('method1()', function ()
   end)
 
   describe('12', function ()
+
+    print('this')
+
     it('should return 121', function ()
       return 121
     end)
+
   end)
 
   it('should return 13', function ()
@@ -81,13 +89,14 @@ end)
 ]])
     vim.bo.filetype = language
 
-    local row = helper.get_row([[\v^\s+return 121]])
+    local row = helper.get_row([['this']])
     local test, err = gettest.one_node(row)
     assert.is_nil(err)
 
     local want = {
-      name = "method1() 12 should return 121",
-      row = helper.get_row("should return 121"),
+      name = "method1() 12",
+      row = helper.get_row("'12'"),
+      is_leaf = false,
     }
     assert.test_value(test, want)
   end)
@@ -123,6 +132,7 @@ end)
     local want = {
       name = "method1()",
       row = helper.get_row("method1"),
+      is_leaf = false,
     }
     assert.test_value(test, want)
   end)
@@ -164,14 +174,17 @@ end)
       {
         name = "method1() should return 11",
         row = helper.get_row("should return 11"),
+        is_leaf = true,
       },
       {
         name = "method1() 12 should return 121",
         row = helper.get_row("should return 121"),
+        is_leaf = true,
       },
       {
         name = "method1() should return 13",
         row = helper.get_row("should return 13"),
+        is_leaf = true,
       },
     }
     assert.test_values(tests, want)

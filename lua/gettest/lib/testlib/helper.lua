@@ -42,16 +42,21 @@ end
 
 local asserts = require("vusted.assert").asserts
 
+local as_value = function(test)
+  local row = test.scope_node:start()
+  return {
+    name = test.name,
+    is_leaf = test.is_leaf,
+    row = row + 1,
+  }
+end
+
 asserts.create("test_values"):register_same(function(tests)
-  return vim.tbl_map(function(test)
-    local row = test.scope_node:start()
-    return { name = test.name, row = row + 1 }
-  end, tests)
+  return vim.tbl_map(as_value, tests)
 end)
 
 asserts.create("test_value"):register_same(function(test)
-  local row = test.scope_node:start()
-  return { name = test.name, row = row + 1 }
+  return as_value(test)
 end)
 
 return M

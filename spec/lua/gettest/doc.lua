@@ -62,6 +62,7 @@ require("genvdoc").generate(full_plugin_name, {
         do
           local descriptions = {
             name = [[(string): test name]],
+            is_leaf = [[(boolean): this node is a leaf.]],
             scope_node = [[(userdata):  for example test function's node.
     |lua-treesitter-node|]],
           }

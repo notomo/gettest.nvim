@@ -59,6 +59,7 @@ options for get methods                                    *gettest.nvim-opts*
 
 test leaf                                             *gettest.nvim-test-leaf*
 
+- {is_leaf} (boolean): this node is a leaf.
 - {name} (string): test name
 - {scope_node} (userdata):  for example test function's node.
     |lua-treesitter-node|

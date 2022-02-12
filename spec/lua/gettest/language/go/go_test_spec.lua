@@ -42,22 +42,27 @@ func TestMethod3(t *testing.T) {
       {
         name = "TestMethod1/should return 11",
         row = helper.get_row("should return 11"),
+        is_leaf = true,
       },
       {
         name = "TestMethod1/12/should return 121",
         row = helper.get_row("should return 121"),
+        is_leaf = true,
       },
       {
         name = "TestMethod1/12/should return 122",
         row = helper.get_row("should return 122"),
+        is_leaf = true,
       },
       {
         name = "TestMethod2/should return 21",
         row = helper.get_row("should return 21"),
+        is_leaf = true,
       },
       {
         name = "TestMethod3",
         row = helper.get_row("TestMethod3"),
+        is_leaf = true,
       },
     }
     assert.test_values(tests, want)

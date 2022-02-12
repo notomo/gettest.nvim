@@ -5,6 +5,7 @@ function M.expose_one(test, bufnr, language, separator, name_factory)
   return {
     name = name_factory:create(test),
     scope_node = test:scope_node(),
+    is_leaf = test.is_leaf,
   }
 end
 
