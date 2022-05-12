@@ -1,4 +1,4 @@
-local helper = require("gettest.lib.testlib.helper")
+local helper = require("gettest.test.helper")
 local gettest = helper.require("gettest")
 
 describe("all_leaves()", function()
