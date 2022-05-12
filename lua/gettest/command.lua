@@ -1,6 +1,6 @@
-local ReturnValue = require("gettest.lib.error_handler").ErrorHandler.for_return_value()
+local ReturnValueAndError = require("gettest.vendor.misclib.error_handler").for_return_value_and_error()
 
-function ReturnValue.all_leaves(raw_opts)
+function ReturnValueAndError.all_leaves(raw_opts)
   local opts, opts_err = require("gettest.core.option").new(raw_opts)
   if opts_err then
     return nil, opts_err
@@ -14,7 +14,7 @@ function ReturnValue.all_leaves(raw_opts)
   return require("gettest.view.output").expose(tests, opts.bufnr, opts.language, opts.tool.separator)
 end
 
-function ReturnValue.scope_root_leaves(row, raw_opts)
+function ReturnValueAndError.scope_root_leaves(row, raw_opts)
   local opts, opts_err = require("gettest.core.option").new(raw_opts)
   if opts_err then
     return nil, opts_err
@@ -28,7 +28,7 @@ function ReturnValue.scope_root_leaves(row, raw_opts)
   return require("gettest.view.output").expose(tests, opts.bufnr, opts.language, opts.tool.separator)
 end
 
-function ReturnValue.one_node(row, raw_opts)
+function ReturnValueAndError.one_node(row, raw_opts)
   local opts, opts_err = require("gettest.core.option").new(raw_opts)
   if opts_err then
     return nil, opts_err
@@ -42,7 +42,7 @@ function ReturnValue.one_node(row, raw_opts)
   return require("gettest.view.output").expose_one(test, opts.bufnr, opts.language, opts.tool.separator)
 end
 
-function ReturnValue.scope_root_node(row, raw_opts)
+function ReturnValueAndError.scope_root_node(row, raw_opts)
   local opts, opts_err = require("gettest.core.option").new(raw_opts)
   if opts_err then
     return nil, opts_err
@@ -56,4 +56,4 @@ function ReturnValue.scope_root_node(row, raw_opts)
   return require("gettest.view.output").expose_one(test, opts.bufnr, opts.language, opts.tool.separator)
 end
 
-return ReturnValue:methods()
+return ReturnValueAndError:methods()
