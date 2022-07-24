@@ -70,7 +70,7 @@ SUPPORTED TOOLS                                 *gettest.nvim-SUPPORTED-TOOLS*
 - go: `go test`
 - javascript: `jest`
 - lua: `busted`
-- typescript: `jest`
+- typescript: `deno test`, `jest`
 
 ==============================================================================
 EXAMPLES                                               *gettest.nvim-EXAMPLES*

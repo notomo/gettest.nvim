@@ -9,7 +9,8 @@ M.tools = {
     go_test = { separator = "/", default = true, display_name = "go test" },
   },
   typescript = {
-    jest = { separator = " ", default = true },
+    jest = { separator = " " },
+    deno_test = { separator = " ", default = true, display_name = "deno test" },
   },
   javascript = {
     jest = { separator = " ", default = true },

@@ -13,7 +13,7 @@ This plugin provides functions to get test structures.
 - go: `go test`
 - javascript: `jest`
 - lua: `busted`
-- typescript: `jest`
+- typescript: `deno test`, `jest`
 
 ## Example
 
