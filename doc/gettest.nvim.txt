@@ -75,7 +75,7 @@ SUPPORTED TOOLS                                 *gettest.nvim-SUPPORTED-TOOLS*
 ==============================================================================
 EXAMPLES                                               *gettest.nvim-EXAMPLES*
 
->
+>lua
   local tests = require("gettest").all_leaves()
   for _, test in ipairs(tests) do
     print(test.name)
