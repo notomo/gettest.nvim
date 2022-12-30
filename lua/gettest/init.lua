@@ -5,7 +5,11 @@ local M = {}
 --- @return table|nil: list of |gettest.nvim-test-leaf|
 --- @return string|nil: error message if error
 function M.all_leaves(opts)
-  return require("gettest.command").all_leaves(opts)
+  local v, err = require("gettest.command").all_leaves(opts)
+  if err then
+    return nil, require("gettest.vendor.misclib.message").wrap(err)
+  end
+  return v, nil
 end
 
 --- Get test leaves in root of the scope from the row.
@@ -14,7 +18,11 @@ end
 --- @return table|nil: list of |gettest.nvim-test-leaf|
 --- @return string|nil: error message if error
 function M.scope_root_leaves(row, opts)
-  return require("gettest.command").scope_root_leaves(row, opts)
+  local v, err = require("gettest.command").scope_root_leaves(row, opts)
+  if err then
+    return nil, require("gettest.vendor.misclib.message").wrap(err)
+  end
+  return v, nil
 end
 
 --- Get a test node from the row.
@@ -23,7 +31,11 @@ end
 --- @return table|nil: |gettest.nvim-test-leaf|
 --- @return string|nil: error message if error
 function M.one_node(row, opts)
-  return require("gettest.command").one_node(row, opts)
+  local v, err = require("gettest.command").one_node(row, opts)
+  if err then
+    return nil, require("gettest.vendor.misclib.message").wrap(err)
+  end
+  return v, nil
 end
 
 --- Get a root test node of the scope from the row.
@@ -32,7 +44,11 @@ end
 --- @return table|nil: |gettest.nvim-test-leaf|
 --- @return string|nil: error message if error
 function M.scope_root_node(row, opts)
-  return require("gettest.command").scope_root_node(row, opts)
+  local v, err = require("gettest.command").scope_root_node(row, opts)
+  if err then
+    return nil, require("gettest.vendor.misclib.message").wrap(err)
+  end
+  return v, nil
 end
 
 return M

@@ -6,6 +6,7 @@ local runtimepath = vim.o.runtimepath
 
 function helper.before_each()
   vim.o.runtimepath = runtimepath
+  vim.g.loaded_nvim_treesitter = nil
 end
 
 function helper.after_each()
