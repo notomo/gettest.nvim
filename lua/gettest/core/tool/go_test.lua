@@ -1,3 +1,11 @@
+local M = {
+  separator = "/",
+}
+
+function M.build_query()
+  return vim.treesitter.parse_query(
+    "go",
+    [=[
 (function_declaration
   name: (identifier) @test.name (#match? @test.name "^Test")
 ) @test.scope
@@ -24,3 +32,8 @@
     )
   )
 ) @test.scope
+]=]
+  )
+end
+
+return M

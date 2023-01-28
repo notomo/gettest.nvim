@@ -7,27 +7,14 @@ vim.o.runtimepath = vim.fn.getcwd() .. "," .. vim.o.runtimepath
 
 local tool_names_text
 do
-  local tools = require("gettest.core.tool").tools
-  local languages = vim.tbl_keys(tools)
-  table.sort(languages, function(a, b)
-    return a < b
-  end)
-
-  local tool_names = vim.tbl_map(function(language)
-    local names = {}
-    for name, setting in pairs(tools[language]) do
-      name = setting.display_name or name
-      table.insert(names, ("`%s`"):format(name))
-    end
-    table.sort(names, function(a, b)
-      return a < b
-    end)
-    return ("- %s: %s"):format(language, table.concat(names, ", "))
-  end, languages)
+  local tool_names = vim.tbl_map(function(name)
+    return ("- %s"):format(name)
+  end, require("gettest.core.tool").all_names())
   tool_names_text = table.concat(tool_names, "\n")
 end
 
 require("genvdoc").generate(full_plugin_name, {
+  source = { patterns = { ("lua/%s/init.lua"):format(plugin_name) } },
   chapters = {
     {
       name = function(group)
@@ -108,7 +95,7 @@ This plugin provides functions to get test structures.
 
 - nvim-treesitter (parser must be in the runtimepath)
 
-## Supported
+## Supported tools
 
 %s
 

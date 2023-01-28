@@ -8,12 +8,12 @@ This plugin provides functions to get test structures.
 
 - nvim-treesitter (parser must be in the runtimepath)
 
-## Supported
+## Supported tools
 
-- go: `go test`
-- javascript: `jest`
-- lua: `busted`
-- typescript: `deno test`, `jest`
+- deno_test
+- go_test
+- jest
+- lua_busted
 
 ## Example
 

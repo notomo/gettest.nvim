@@ -1,15 +1,14 @@
 local M = {}
 
-function M.collect_all_leaves(bufnr, language, tool_name)
+function M.collect_all_leaves(bufnr, language, query)
   local root, err = require("gettest.lib.treesitter.node").get_first_tree_root(bufnr, language)
   if err then
     return nil, err
   end
-  local query = require("gettest.core.query").new(language, tool_name)
   return require("gettest.core.tests").collect(root, query, bufnr, 0, -1)
 end
 
-function M.collect_scope_root_leaves(row, bufnr, language, tool_name)
+function M.collect_scope_root_leaves(row, bufnr, language, query)
   vim.validate({ row = { row, "number" } })
 
   local root, err = require("gettest.lib.treesitter.node").get_first_tree_root(bufnr, language)
@@ -17,7 +16,6 @@ function M.collect_scope_root_leaves(row, bufnr, language, tool_name)
     return nil, err
   end
 
-  local query = require("gettest.core.query").new(language, tool_name)
   local tests = require("gettest.core.tests").collect(root, query, bufnr, 0, -1)
 
   local largest_test = tests:get_largest_by_row(row)
@@ -28,7 +26,7 @@ function M.collect_scope_root_leaves(row, bufnr, language, tool_name)
   return tests:filter_by_scope(largest_test)
 end
 
-function M.collect_one(row, bufnr, language, tool_name)
+function M.collect_one(row, bufnr, language, query)
   vim.validate({ row = { row, "number" } })
 
   local root, err = require("gettest.lib.treesitter.node").get_first_tree_root(bufnr, language)
@@ -36,7 +34,6 @@ function M.collect_one(row, bufnr, language, tool_name)
     return nil, err
   end
 
-  local query = require("gettest.core.query").new(language, tool_name)
   local tests = require("gettest.core.tests").collect(root, query, bufnr, 0, -1)
 
   local target_test = tests:get_smallest_by_row(row)
@@ -47,7 +44,7 @@ function M.collect_one(row, bufnr, language, tool_name)
   return target_test
 end
 
-function M.collect_scope_root_node(row, bufnr, language, tool_name)
+function M.collect_scope_root_node(row, bufnr, language, query)
   vim.validate({ row = { row, "number" } })
 
   local root, err = require("gettest.lib.treesitter.node").get_first_tree_root(bufnr, language)
@@ -55,7 +52,6 @@ function M.collect_scope_root_node(row, bufnr, language, tool_name)
     return nil, err
   end
 
-  local query = require("gettest.core.query").new(language, tool_name)
   local tests = require("gettest.core.tests").collect(root, query, bufnr, 0, -1)
 
   local target_test = tests:get_largest_by_row(row)
