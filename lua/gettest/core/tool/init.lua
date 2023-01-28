@@ -1,5 +1,4 @@
 local M = {}
-M.__index = M
 
 M.default_tools = {
   lua = "lua_busted",
@@ -8,34 +7,33 @@ M.default_tools = {
   javascript = "jest",
 }
 
-function M.new(name)
-  local tool = require("gettest.vendor.misclib.module").find("gettest.core.tool." .. name)
-  if not tool then
+function M.new(name, filetype)
+  local tool_module = require("gettest.vendor.misclib.module").find("gettest.core.tool." .. name)
+  if not tool_module then
     return nil, ("no tool for tool_name: `%s`"):format(name)
   end
-  local tbl = {
-    name = name,
-    separator = tool.separator,
-    build_query = tool.build_query,
-  }
-  return setmetatable(tbl, M)
+
+  local tool = tool_module.new(filetype)
+  tool.name = name
+  return tool
 end
 
-function M.from_name(language, name)
+function M.from_name(name, filetype)
   vim.validate({
-    language = { language, "string" },
     name = { name, "string" },
+    filetype = { filetype, "string" },
   })
 
   if name ~= "" then
-    return M.new(name)
+    return M.new(name, filetype)
   end
 
-  local default_tool_name = M.default_tools[language]
-  if not default_tool_name then
-    return nil, ("no tools for language: `%s`"):format(language)
+  local default_tool_name = M.default_tools[filetype]
+  if default_tool_name then
+    return M.new(default_tool_name, filetype)
   end
-  return M.new(default_tool_name)
+
+  return nil, ("no tools for language: `%s`"):format(filetype)
 end
 
 function M.all_names()

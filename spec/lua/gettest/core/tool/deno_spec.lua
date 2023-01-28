@@ -14,7 +14,6 @@ Deno.test("TestMethod1", () => {
 
 });
 ]])
-    vim.bo.filetype = language
 
     local tests, err = gettest.all_leaves({ tool_name = "deno_test" })
     assert.is_nil(err)

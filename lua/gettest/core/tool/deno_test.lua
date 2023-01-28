@@ -1,10 +1,27 @@
-local M = {
-  separator = " ",
-}
+local M = {}
+M.__index = M
 
-function M.build_query()
+local language = "typescript"
+
+function M.new()
+  local tbl = {
+    language = language,
+    _string_unwrapper = require("gettest.lib.treesitter.string_unwrapper").new(language),
+  }
+  return setmetatable(tbl, M)
+end
+
+function M.unwrap_string(self, str)
+  return self._string_unwrapper:unwrap(str)
+end
+
+function M.build_name(_, texts)
+  return table.concat(texts, " ")
+end
+
+function M.build_query(self)
   return vim.treesitter.parse_query(
-    "typescript",
+    self.language,
     [=[
 (call_expression
   function: (member_expression

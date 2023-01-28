@@ -1,19 +1,27 @@
 local M = {}
 
-function M.expose_one(test, bufnr, language, separator, name_factory)
-  name_factory = name_factory or require("gettest.view.name_factory").new(bufnr, language, separator)
+function M.expose_one(test, bufnr, tool)
   return {
-    name = name_factory:create(test),
+    name = M._create(test, bufnr, tool),
     scope_node = test:scope_node(),
     is_leaf = test.is_leaf,
   }
 end
 
-function M.expose(tests, bufnr, language, separator)
-  local name_factory = require("gettest.view.name_factory").new(bufnr, language, separator)
+function M.expose(tests, bufnr, tool)
   return tests:map(function(test)
-    return M.expose_one(test, bufnr, language, separator, name_factory)
+    return M.expose_one(test, bufnr, tool)
   end)
+end
+
+local get_node_text = vim.treesitter.query.get_node_text
+function M._create(test, bufnr, tool)
+  local texts = {}
+  for _, layer in test:iter_layers() do
+    local text = get_node_text(layer.name_node, bufnr)
+    table.insert(texts, tool:unwrap_string(text))
+  end
+  return tool:build_name(texts)
 end
 
 return M

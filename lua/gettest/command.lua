@@ -5,13 +5,14 @@ function M.all_leaves(raw_opts)
   if opts_err then
     return nil, opts_err
   end
+  local tool = opts.tool
 
-  local tests, err = require("gettest.core").collect_all_leaves(opts.bufnr, opts.language, opts.tool.build_query())
+  local tests, err = require("gettest.core").collect_all_leaves(opts.bufnr, tool.language, tool:build_query())
   if err then
     return nil, err
   end
 
-  return require("gettest.view.output").expose(tests, opts.bufnr, opts.language, opts.tool.separator)
+  return require("gettest.view.output").expose(tests, opts.bufnr, tool)
 end
 
 function M.scope_root_leaves(row, raw_opts)
@@ -19,14 +20,15 @@ function M.scope_root_leaves(row, raw_opts)
   if opts_err then
     return nil, opts_err
   end
+  local tool = opts.tool
 
   local tests, err =
-    require("gettest.core").collect_scope_root_leaves(row, opts.bufnr, opts.language, opts.tool.build_query())
+    require("gettest.core").collect_scope_root_leaves(row, opts.bufnr, tool.language, tool:build_query())
   if err then
     return nil, err
   end
 
-  return require("gettest.view.output").expose(tests, opts.bufnr, opts.language, opts.tool.separator)
+  return require("gettest.view.output").expose(tests, opts.bufnr, tool)
 end
 
 function M.one_node(row, raw_opts)
@@ -34,13 +36,14 @@ function M.one_node(row, raw_opts)
   if opts_err then
     return nil, opts_err
   end
+  local tool = opts.tool
 
-  local test, err = require("gettest.core").collect_one(row, opts.bufnr, opts.language, opts.tool.build_query())
+  local test, err = require("gettest.core").collect_one(row, opts.bufnr, tool.language, tool:build_query())
   if err then
     return nil, err
   end
 
-  return require("gettest.view.output").expose_one(test, opts.bufnr, opts.language, opts.tool.separator)
+  return require("gettest.view.output").expose_one(test, opts.bufnr, tool)
 end
 
 function M.scope_root_node(row, raw_opts)
@@ -48,14 +51,14 @@ function M.scope_root_node(row, raw_opts)
   if opts_err then
     return nil, opts_err
   end
+  local tool = opts.tool
 
-  local test, err =
-    require("gettest.core").collect_scope_root_node(row, opts.bufnr, opts.language, opts.tool.build_query())
+  local test, err = require("gettest.core").collect_scope_root_node(row, opts.bufnr, tool.language, tool:build_query())
   if err then
     return nil, err
   end
 
-  return require("gettest.view.output").expose_one(test, opts.bufnr, opts.language, opts.tool.separator)
+  return require("gettest.view.output").expose_one(test, opts.bufnr, tool)
 end
 
 return M

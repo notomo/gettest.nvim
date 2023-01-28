@@ -2,7 +2,6 @@ local M = {}
 
 M.default = {
   bufnr = 0,
-  language = "",
   tool_name = "",
 }
 
@@ -16,11 +15,8 @@ function M.new(raw_opts)
     opts.bufnr = vim.api.nvim_get_current_buf()
   end
 
-  if opts.language == "" then
-    opts.language = vim.bo[opts.bufnr].filetype
-  end
-
-  local tool, err = require("gettest.core.tool").from_name(opts.language, opts.tool_name)
+  local filetype = vim.bo[opts.bufnr].filetype
+  local tool, err = require("gettest.core.tool").from_name(opts.tool_name, filetype)
   if err then
     return nil, err
   end

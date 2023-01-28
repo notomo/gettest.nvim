@@ -35,8 +35,6 @@ require("genvdoc").generate(full_plugin_name, {
           local descriptions = {
             bufnr = [[(number | nil): target buffer number.
     default: %s]],
-            language = [[(string | nil): treesitter parser language.
-    default: filetype]],
             tool_name = [[(string | nil): test framework name.]],
           }
           local default = require("gettest.core.option").default

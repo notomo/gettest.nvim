@@ -53,8 +53,6 @@ options for get methods                                    *gettest.nvim-opts*
 
 - {bufnr} (number | nil): target buffer number.
     default: 0
-- {language} (string | nil): treesitter parser language.
-    default: filetype
 - {tool_name} (string | nil): test framework name.
 
 test leaf                                             *gettest.nvim-test-leaf*
