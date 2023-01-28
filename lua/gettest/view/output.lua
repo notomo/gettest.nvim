@@ -2,7 +2,7 @@ local M = {}
 
 function M.expose_one(test, bufnr, tool)
   return {
-    name = M._create(test, bufnr, tool),
+    name = M._create_name(test, bufnr, tool),
     scope_node = test:scope_node(),
     is_leaf = test.is_leaf,
   }
@@ -15,7 +15,7 @@ function M.expose(tests, bufnr, tool)
 end
 
 local get_node_text = vim.treesitter.query.get_node_text
-function M._create(test, bufnr, tool)
+function M._create_name(test, bufnr, tool)
   local texts = {}
   for _, layer in test:iter_layers() do
     local text = get_node_text(layer.name_node, bufnr)

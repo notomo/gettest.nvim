@@ -10,11 +10,12 @@ function M.new(name_node, scope_node)
 end
 
 function M.contains(self, layer)
-  return require("gettest.lib.treesitter.node").contains(self.scope_node, layer.scope_node)
+  local range = { vim.treesitter.get_node_range(layer.scope_node) }
+  return vim.treesitter.node_contains(self.scope_node, range)
 end
 
 function M.contains_row(self, row)
-  return require("gettest.lib.treesitter.node").contains_row(self.scope_node, row)
+  return vim.treesitter.node_contains(self.scope_node, { row, 0, row, -1 })
 end
 
 return M
