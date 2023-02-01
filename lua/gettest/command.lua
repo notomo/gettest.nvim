@@ -1,64 +1,61 @@
 local M = {}
 
-function M.all_leaves(raw_opts)
+function M.nodes(raw_opts)
   local opts, opts_err = require("gettest.core.option").new(raw_opts)
   if opts_err then
     return nil, opts_err
   end
-  local tool = opts.tool
+  local target = opts.target
 
-  local tests, err = require("gettest.core").collect_all_leaves(opts.bufnr, tool.language, tool:build_query())
+  local tool, tool_err = require("gettest.core.tool").from(opts.tool_name, target:filetype())
+  if tool_err then
+    return nil, tool_err
+  end
+
+  local raw_tests, err = M._collect(opts.scope, target, tool.language, tool:build_query())
   if err then
     return nil, err
   end
 
-  return require("gettest.view.output").expose(tests, opts.bufnr, tool)
+  return require("gettest.view.output").expose(raw_tests, target.source, tool)
 end
 
-function M.scope_root_leaves(row, raw_opts)
-  local opts, opts_err = require("gettest.core.option").new(raw_opts)
-  if opts_err then
-    return nil, opts_err
-  end
-  local tool = opts.tool
+local scope_filters = {
+  all = function(raw_tests, _)
+    return raw_tests
+  end,
+  nearest_ancestor = function(raw_tests, row)
+    local test = require("gettest.core.tests").new(raw_tests):get_smallest_by_row(row)
+    return { test }
+  end,
+  largest_ancestor = function(raw_tests, row)
+    local test = require("gettest.core.tests").new(raw_tests):get_largest_by_row(row)
+    return { test }
+  end,
+}
 
-  local tests, err =
-    require("gettest.core").collect_scope_root_leaves(row, opts.bufnr, tool.language, tool:build_query())
+function M._collect(scope, target, language, query)
+  local root, err = require("gettest.lib.treesitter.node").get_first_tree_root(target.source, language)
   if err then
     return nil, err
   end
 
-  return require("gettest.view.output").expose(tests, opts.bufnr, tool)
-end
-
-function M.one_node(row, raw_opts)
-  local opts, opts_err = require("gettest.core.option").new(raw_opts)
-  if opts_err then
-    return nil, opts_err
-  end
-  local tool = opts.tool
-
-  local test, err = require("gettest.core").collect_one(row, opts.bufnr, tool.language, tool:build_query())
-  if err then
-    return nil, err
+  local raw_tests, collect_err = require("gettest.core.tests").collect(root, query, target.source, 0, -1)
+  if collect_err then
+    return nil, collect_err
   end
 
-  return require("gettest.view.output").expose_one(test, opts.bufnr, tool)
-end
-
-function M.scope_root_node(row, raw_opts)
-  local opts, opts_err = require("gettest.core.option").new(raw_opts)
-  if opts_err then
-    return nil, opts_err
-  end
-  local tool = opts.tool
-
-  local test, err = require("gettest.core").collect_scope_root_node(row, opts.bufnr, tool.language, tool:build_query())
-  if err then
-    return nil, err
+  local filter_by_scope = scope_filters[scope]
+  if not filter_by_scope then
+    return nil, "unexpected scope: " .. scope
   end
 
-  return require("gettest.view.output").expose_one(test, opts.bufnr, tool)
+  local scoped_raw_tests, scope_err = filter_by_scope(raw_tests, target.row)
+  if scope_err then
+    return nil, scope_err
+  end
+
+  return scoped_raw_tests
 end
 
 return M

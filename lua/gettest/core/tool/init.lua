@@ -18,7 +18,7 @@ function M.new(name, filetype)
   return tool
 end
 
-function M.from_name(name, filetype)
+function M.from(name, filetype)
   vim.validate({
     name = { name, "string" },
     filetype = { filetype, "string" },

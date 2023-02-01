@@ -3,64 +3,38 @@
 ==============================================================================
 Lua module: gettest                                     *gettest.nvim-gettest*
 
-all_leaves({opts})                                      *gettest.all_leaves()*
-  Get all tree test leaves.
+nodes({opts})                                                *gettest.nodes()*
+  Get test nodes.
 
   Parameters: ~
-    {opts} (table|nil) |gettest.nvim-opts|
+    {opts} (table|nil) |gettest.nvim-options|
 
   Return: ~
-    (table|nil) list of |gettest.nvim-test-leaf|
-    (string|nil) error message if error
-
-scope_root_leaves({row}, {opts})                 *gettest.scope_root_leaves()*
-  Get test leaves in root of the scope from the row.
-
-  Parameters: ~
-    {row} (number) the row to specify a test scope (1-index)
-    {opts} (table|nil) |gettest.nvim-opts|
-
-  Return: ~
-    (table|nil) list of |gettest.nvim-test-leaf|
-    (string|nil) error message if error
-
-one_node({row}, {opts})                                   *gettest.one_node()*
-  Get a test node from the row.
-
-  Parameters: ~
-    {row} (number) the row to specify a test scope (1-index)
-    {opts} (table|nil) |gettest.nvim-opts|
-
-  Return: ~
-    (table|nil) |gettest.nvim-test-leaf|
-    (string|nil) error message if error
-
-scope_root_node({row}, {opts})                     *gettest.scope_root_node()*
-  Get a root test node of the scope from the row.
-
-  Parameters: ~
-    {row} (number) the row to specify a test scope (1-index)
-    {opts} (table|nil) |gettest.nvim-opts|
-
-  Return: ~
-    (table|nil) |gettest.nvim-test-leaf|
+    (table) list of |gettest.nvim-test-node|
     (string|nil) error message if error
 
 ==============================================================================
 TYPES                                                     *gettest.nvim-TYPES*
 
-options for get methods                                    *gettest.nvim-opts*
+options                                                 *gettest.nvim-options*
 
-- {bufnr} (number | nil): target buffer number.
-    default: 0
-- {tool_name} (string | nil): test framework name.
+- {scope} (string | nil): one of the following.
+  - all : returns all test nodes (default)
+  - nearest_ancestor : returns a nearest ancestor test node from target.row
+  - largest_ancestor : returns a largest ancestor test node from target.row
+- {target} (table | nil)
+  - {bufnr} (number | nil): Buffer number that is used if path is nil.
+  - {path} (string | nil): file path
+  - {row} (string | nil): use to calculate ancestor (1-based index)
+- {tool_name} (string | nil): test tool name. |gettest.nvim-SUPPORTED-TOOLS|
 
-test leaf                                             *gettest.nvim-test-leaf*
+test node                                             *gettest.nvim-test-node*
 
-- {is_leaf} (boolean): this node is a leaf.
-- {name} (string): test name
-- {scope_node} (userdata):  for example test function's node.
-    |lua-treesitter-node|
+- {children} (table): children nodes. list of |gettest.nvim-test-node|
+- {full_name} (string): full name including parent node names
+- {name} (string): node name
+- {scope_node} (userdata): for example test function's node.
+    See |treesitter-node|.
 
 ==============================================================================
 SUPPORTED TOOLS                                 *gettest.nvim-SUPPORTED-TOOLS*
@@ -74,15 +48,8 @@ SUPPORTED TOOLS                                 *gettest.nvim-SUPPORTED-TOOLS*
 EXAMPLES                                               *gettest.nvim-EXAMPLES*
 
 >lua
-  local tests = require("gettest").all_leaves()
-  for _, test in ipairs(tests) do
-    print(test.name)
-    print(test.scope_node:start() + 1) -- test scope start row (1-index)
-  end
-
-  local test = require("gettest").one_node(vim.fn.line("."))
-  print(test.name)
-  print(test.scope_node:start() + 1)
+  local tests = require("gettest").nodes()
+  print(vim.inspect(tests))
 <
 
 ==============================================================================

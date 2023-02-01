@@ -1,8 +1,9 @@
 local M = {}
 
 M.default = {
-  bufnr = 0,
+  scope = "all",
   tool_name = "",
+  target = {},
 }
 
 function M.new(raw_opts)
@@ -11,16 +12,11 @@ function M.new(raw_opts)
 
   local opts = vim.tbl_deep_extend("force", M.default, raw_opts)
 
-  if opts.bufnr == 0 then
-    opts.bufnr = vim.api.nvim_get_current_buf()
-  end
-
-  local filetype = vim.bo[opts.bufnr].filetype
-  local tool, err = require("gettest.core.tool").from_name(opts.tool_name, filetype)
+  local target, err = require("gettest.core.target").new(raw_opts.target)
   if err then
     return nil, err
   end
-  opts.tool = tool
+  opts.target = target
 
   return opts
 end

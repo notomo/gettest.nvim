@@ -1,10 +1,17 @@
 local M = {}
 
-function M.get_first_tree_root(bufnr, language)
+function M.get_first_tree_root(source, language)
+  vim.validate({ source = { source, { "number", "string" } } })
   if not vim.treesitter.language.require_language(language, nil, true) then
     return nil, ("not found tree-sitter parser for `%s`"):format(language)
   end
-  local parser = vim.treesitter.get_parser(bufnr, language)
+  local factory
+  if type(source) == "number" then
+    factory = vim.treesitter.get_parser
+  else
+    factory = vim.treesitter.get_string_parser
+  end
+  local parser = factory(source, language)
   local trees = parser:parse()
   return trees[1]:root()
 end

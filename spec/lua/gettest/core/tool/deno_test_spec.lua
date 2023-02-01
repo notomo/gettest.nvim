@@ -6,7 +6,7 @@ describe("with deno_test,", function()
   after_each(helper.after_each)
 
   local language = "typescript"
-  it("works gettest.all_leaves()", function()
+  it("works gettest.nodes()", function()
     helper.install_parser(language)
 
     helper.set_lines([[
@@ -15,14 +15,15 @@ Deno.test("TestMethod1", () => {
 });
 ]])
 
-    local tests, err = gettest.all_leaves({ tool_name = "deno_test" })
+    local tests, err = gettest.nodes({ scope = "all", tool_name = "deno_test" })
     assert.is_nil(err)
 
     local want = {
       {
         name = "TestMethod1",
+        full_name = "TestMethod1",
         row = helper.get_row("TestMethod1"),
-        is_leaf = true,
+        children = {},
       },
     }
     assert.test_values(tests, want)

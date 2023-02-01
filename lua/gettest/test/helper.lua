@@ -12,7 +12,6 @@ end
 function helper.after_each()
   helper.cleanup()
   helper.cleanup_loaded_modules(plugin_name)
-  print(" ")
 end
 
 function helper.set_lines(str)
@@ -43,21 +42,20 @@ end
 
 local asserts = require("vusted.assert").asserts
 
-local as_value = function(test)
+local function as_value(test)
   local row = test.scope_node:start()
   return {
     name = test.name,
-    is_leaf = test.is_leaf,
+    full_name = test.full_name,
     row = row + 1,
+    children = vim.tbl_map(function(child)
+      return as_value(child)
+    end, test.children),
   }
 end
 
 asserts.create("test_values"):register_same(function(tests)
   return vim.tbl_map(as_value, tests)
-end)
-
-asserts.create("test_value"):register_same(function(test)
-  return as_value(test)
 end)
 
 return helper

@@ -33,9 +33,19 @@ require("genvdoc").generate(full_plugin_name, {
         local opts_text
         do
           local descriptions = {
-            bufnr = [[(number | nil): target buffer number.
-    default: %s]],
-            tool_name = [[(string | nil): test framework name.]],
+            target = {
+              text = [[(table | nil)]],
+              children = {
+                bufnr = [[(number | nil): Buffer number that is used if path is nil.]],
+                path = [[(string | nil): file path]],
+                row = [[(string | nil): use to calculate ancestor (1-based index)]],
+              },
+            },
+            tool_name = [[(string | nil): test tool name. |gettest.nvim-SUPPORTED-TOOLS|]],
+            scope = [[(string | nil): one of the following.
+  - all : returns all test nodes (default)
+  - nearest_ancestor : returns a nearest ancestor test node from target.row
+  - largest_ancestor : returns a largest ancestor test node from target.row]],
           }
           local default = require("gettest.core.option").default
           local keys = vim.tbl_keys(default)
@@ -43,22 +53,23 @@ require("genvdoc").generate(full_plugin_name, {
           opts_text = table.concat(lines, "\n")
         end
 
-        local test_leaf_text
+        local test_node_text
         do
           local descriptions = {
-            name = [[(string): test name]],
-            is_leaf = [[(boolean): this node is a leaf.]],
-            scope_node = [[(userdata):  for example test function's node.
-    |lua-treesitter-node|]],
+            name = [[(string): node name]],
+            full_name = [[(string): full name including parent node names]],
+            children = [[(table): children nodes. list of |gettest.nvim-test-node|]],
+            scope_node = [[(userdata): for example test function's node.
+    See |treesitter-node|.]],
           }
           local keys = vim.tbl_keys(descriptions)
           local lines = util.each_keys_description(keys, descriptions)
-          test_leaf_text = table.concat(lines, "\n")
+          test_node_text = table.concat(lines, "\n")
         end
 
         return util.sections(ctx, {
-          { name = "options for get methods", tag_name = "opts", text = opts_text },
-          { name = "test leaf", tag_name = "test-leaf", text = test_leaf_text },
+          { name = "options", tag_name = "options", text = opts_text },
+          { name = "test node", tag_name = "test-node", text = test_node_text },
         })
       end,
     },

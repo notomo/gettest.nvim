@@ -1,20 +1,20 @@
+local vim = vim
+
 local M = {}
 M.__index = M
 
-function M.new(layers, is_leaf)
+function M.new(name_nodes, scope_node, children)
   vim.validate({
-    layers = { layers, "table" },
-    is_leaf = { is_leaf, "boolean" },
+    name_nodes = { name_nodes, "table" },
+    scope_node = { scope_node, "userdata" },
+    children = { children, "table" },
   })
   local tbl = {
-    _layers = layers,
-    is_leaf = is_leaf,
+    name_nodes = name_nodes,
+    scope_node = scope_node,
+    children = children,
   }
   return setmetatable(tbl, M)
-end
-
-function M.zero()
-  return M.new({}, false)
 end
 
 local capture_handlers = {
@@ -27,86 +27,38 @@ local capture_handlers = {
 }
 function M.from_match(match, query)
   local captures = require("gettest.lib.treesitter.node").get_captures(match, query, capture_handlers)
-  local layer = require("gettest.core.test_layer").new(captures.name_node, captures.scope_node)
-  return M.new({ layer }, true)
+  return M.new({ captures.name_node }, captures.scope_node, {})
 end
 
-function M.join(self, test)
-  local first = test._layers[1]
-  if not first then
-    return nil, false
+function M.add(self, test)
+  if not self:contains(test) then
+    return false
   end
 
-  local last_layer = self._layers[#self._layers]
-  if not last_layer then
-    return nil, false
-  end
-
-  if last_layer:contains(first) then
-    local layers = {}
-    vim.list_extend(layers, self._layers)
-    vim.list_extend(layers, test._layers)
-    return M.new(layers, true), true
-  end
-
-  local others = vim.list_slice(self._layers, 1, #self._layers - 1)
-  for i = #others, 1, -1 do
-    local layer = others[i]
-    if layer:contains(first) then
-      local layers = {}
-      vim.list_extend(layers, self._layers, 1, i)
-      vim.list_extend(layers, test._layers)
-      return M.new(layers, true), false
+  for _, child in ipairs(self.children) do
+    local added = child:add(test)
+    if added then
+      return true
     end
   end
 
-  return nil, false
-end
+  local name_nodes = {}
+  vim.list_extend(name_nodes, self.name_nodes)
+  vim.list_extend(name_nodes, test.name_nodes)
+  test.name_nodes = name_nodes
 
-function M.iter_layers(self)
-  return ipairs(self._layers)
-end
+  table.insert(self.children, test)
 
-function M.scope_node(self)
-  local last_layer = self._layers[#self._layers]
-  if not last_layer then
-    return nil
-  end
-  return last_layer.scope_node
-end
-
-function M.smallest(self, row)
-  for i = #self._layers, 1, -1 do
-    local layer = self._layers[i]
-    if layer:contains_row(row) then
-      local layers = {}
-      vim.list_extend(layers, self._layers, 1, i)
-      return M.new(layers, i == #self._layers)
-    end
-  end
-end
-
-function M.largest(self, row)
-  local first_layer = self._layers[1]
-  if not first_layer then
-    return nil
-  end
-  if not first_layer:contains_row(row) then
-    return nil
-  end
-  return M.new({ first_layer }, #self._layers == 1)
+  return true
 end
 
 function M.contains(self, test)
-  local scope_layer = self._layers[#self._layers]
-  if not scope_layer then
-    return false
-  end
-  local layer = test._layers[#test._layers]
-  if not layer then
-    return false
-  end
-  return scope_layer:contains(layer)
+  local range = { vim.treesitter.get_node_range(test.scope_node) }
+  return vim.treesitter.node_contains(self.scope_node, range)
+end
+
+function M.contains_row(self, row)
+  return vim.treesitter.node_contains(self.scope_node, { row, 0, row, -1 })
 end
 
 return M
