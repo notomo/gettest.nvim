@@ -3,7 +3,7 @@ local vim = vim
 local M = {}
 
 local get_node_text = vim.treesitter.query.get_node_text
-function M.expose(raw_tests, source, tool)
+function M.new(raw_tests, source, tool)
   local create_names = function(name_nodes)
     local names = {}
     for _, name_node in ipairs(name_nodes) do
@@ -17,18 +17,18 @@ function M.expose(raw_tests, source, tool)
   end
 
   return vim.tbl_map(function(test)
-    return M._expose_one(test, create_names)
+    return M._new_child(test, create_names)
   end, raw_tests)
 end
 
-function M._expose_one(test, create_names)
+function M._new_child(test, create_names)
   local name, full_name = create_names(test.name_nodes)
   return {
     name = name,
     full_name = full_name,
     scope_node = test.scope_node,
     children = vim.tbl_map(function(child)
-      return M._expose_one(child, create_names)
+      return M._new_child(child, create_names)
     end, test.children),
   }
 end

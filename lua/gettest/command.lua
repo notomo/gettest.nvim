@@ -15,7 +15,7 @@ function M.nodes(raw_opts)
 
   local scoped_tests = opts.filter_by_scope(tests, target.row)
 
-  return require("gettest.view.output").expose(scoped_tests, target.source, tool)
+  return require("gettest.core.response").new(scoped_tests, target.source, tool)
 end
 
 return M
