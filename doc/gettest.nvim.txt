@@ -17,8 +17,8 @@ TYPES                                                     *gettest.nvim-TYPES*
 
 options                                                 *gettest.nvim-options*
 
-- {scope} (string | nil): one of the following.
-  - all : returns all test nodes (default)
+- {scope} (string | nil): one of the following. (default: "all")
+  - all : returns all test nodes
   - nearest_ancestor : returns a nearest ancestor test node from target.row
   - largest_ancestor : returns a largest ancestor test node from target.row
 - {target} (table | nil)

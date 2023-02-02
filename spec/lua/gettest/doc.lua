@@ -42,8 +42,8 @@ require("genvdoc").generate(full_plugin_name, {
               },
             },
             tool_name = [[(string | nil): test tool name. |gettest.nvim-SUPPORTED-TOOLS|]],
-            scope = [[(string | nil): one of the following.
-  - all : returns all test nodes (default)
+            scope = [[(string | nil): one of the following. (default: %s)
+  - all : returns all test nodes
   - nearest_ancestor : returns a nearest ancestor test node from target.row
   - largest_ancestor : returns a largest ancestor test node from target.row]],
           }

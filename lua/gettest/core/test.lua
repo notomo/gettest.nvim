@@ -3,14 +3,14 @@ local vim = vim
 local M = {}
 M.__index = M
 
-function M.new(name_nodes, scope_node)
+function M.new(scope_node, name_nodes)
   vim.validate({
-    name_nodes = { name_nodes, "table" },
     scope_node = { scope_node, "userdata" },
+    name_nodes = { name_nodes, "table", true },
   })
   local tbl = {
-    name_nodes = name_nodes,
     scope_node = scope_node,
+    name_nodes = name_nodes or {},
     children = {},
   }
   return setmetatable(tbl, M)
@@ -26,7 +26,7 @@ local capture_handlers = {
 }
 function M.from_match(match, query)
   local captures = require("gettest.lib.treesitter.node").get_captures(match, query, capture_handlers)
-  return M.new({ captures.name_node }, captures.scope_node)
+  return M.new(captures.scope_node, { captures.name_node })
 end
 
 function M.add(self, test)
