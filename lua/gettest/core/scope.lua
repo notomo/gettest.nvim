@@ -4,7 +4,7 @@ local filters = {
   all = function(tests, _)
     return tests
   end,
-  nearest_ancestor = function(tests, row)
+  smallest_ancestor = function(tests, row)
     local test = require("gettest.core.tests").get_smallest_from(tests, row)
     return { test }
   end,

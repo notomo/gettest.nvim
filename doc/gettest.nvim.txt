@@ -19,7 +19,7 @@ options                                                 *gettest.nvim-options*
 
 - {scope} (string | nil): one of the following. (default: "all")
   - all : returns all test nodes
-  - nearest_ancestor : returns a nearest ancestor test node from target.row
+  - smallest_ancestor : returns a smallest ancestor test node from target.row
   - largest_ancestor : returns a largest ancestor test node from target.row
 - {target} (table | nil)
   - {bufnr} (number | nil): Buffer number that is used if path is nil.

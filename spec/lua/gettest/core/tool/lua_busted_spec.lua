@@ -88,7 +88,7 @@ end)
     assert.test_values(tests, want)
   end)
 
-  it("works gettest.nodes() with scope=nearest_ancestor", function()
+  it("works gettest.nodes() with scope=smallest_ancestor", function()
     helper.install_parser(language)
 
     helper.set_lines([[
@@ -116,7 +116,7 @@ end)
 
     local row = helper.get_row([['this']])
     local tests, err = gettest.nodes({
-      scope = "nearest_ancestor",
+      scope = "smallest_ancestor",
       target = { row = row },
     })
     assert.is_nil(err)
