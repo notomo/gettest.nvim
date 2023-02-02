@@ -15,8 +15,8 @@ function M.unwrap_string(self, str)
   return self._string_unwrapper:unwrap(str)
 end
 
-function M.build_name(_, texts)
-  return table.concat(texts, " ")
+function M.build_full_name(_, names)
+  return table.concat(names, " ")
 end
 
 function M.build_query(self)

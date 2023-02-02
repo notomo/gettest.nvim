@@ -39,7 +39,7 @@ describe("gettest.nodes()", function()
     assert.match("%[gettest%] scope must be all|largest_ancestor|smallest_ancestor, but actual: not_found", err)
   end)
 
-  it("can returns file content tests", function()
+  it("can return file content tests", function()
     helper.test_data:create_file(
       "test.lua",
       [[

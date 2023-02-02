@@ -2,8 +2,7 @@ local M = {}
 M.__index = M
 
 function M.new(raw_target)
-  vim.validate({ raw_target = { raw_target, "table", true } })
-  raw_target = raw_target or {}
+  vim.validate({ raw_target = { raw_target, "table" } })
 
   local source
   if raw_target.path then
@@ -12,12 +11,9 @@ function M.new(raw_target)
       return nil, err
     end
     source = str
-  elseif raw_target.bufnr == 0 then
-    source = vim.api.nvim_get_current_buf()
   else
     source = raw_target.bufnr or vim.api.nvim_get_current_buf()
   end
-  vim.validate({ source = { source, { "number", "string" } } })
 
   local tbl = {
     source = source,

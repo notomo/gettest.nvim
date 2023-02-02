@@ -31,7 +31,6 @@ function M.get_smallest_from(tests, row)
       return child or test
     end
   end
-  return nil
 end
 
 return M
