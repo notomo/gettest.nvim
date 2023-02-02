@@ -10,7 +10,7 @@ function M.new(raw_tests)
 end
 
 function M.collect(root, query, source, start_row, end_row)
-  local test_root = Test.new({}, root, {})
+  local test_root = Test.new({}, root)
   for _, match in query:iter_matches(root, source, start_row, end_row) do
     local test = Test.from_match(match, query)
     test_root:add(test)
