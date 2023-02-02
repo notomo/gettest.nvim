@@ -15,8 +15,7 @@ Deno.test("TestMethod1", () => {
 });
 ]])
 
-    local tests, err = gettest.nodes({ scope = "all", tool_name = "deno_test" })
-    assert.is_nil(err)
+    local tests = gettest.nodes({ scope = "all", tool_name = "deno_test" })
 
     local want = {
       {

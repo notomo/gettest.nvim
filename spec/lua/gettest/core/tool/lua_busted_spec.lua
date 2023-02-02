@@ -35,8 +35,7 @@ end)
 ]])
     vim.bo.filetype = language
 
-    local tests, err = gettest.nodes({ scope = "all" })
-    assert.is_nil(err)
+    local tests = gettest.nodes({ scope = "all" })
 
     local want = {
       {
@@ -115,11 +114,10 @@ end)
     vim.bo.filetype = language
 
     local row = helper.get_row([['this']])
-    local tests, err = gettest.nodes({
+    local tests = gettest.nodes({
       scope = "smallest_ancestor",
       target = { row = row },
     })
-    assert.is_nil(err)
 
     local want = {
       {
@@ -164,11 +162,10 @@ end)
     vim.bo.filetype = language
 
     local row = helper.get_row([[\v^\s+return 121]])
-    local tests, err = gettest.nodes({
+    local tests = gettest.nodes({
       scope = "largest_ancestor",
       target = { row = row },
     })
-    assert.is_nil(err)
 
     local want = {
       {

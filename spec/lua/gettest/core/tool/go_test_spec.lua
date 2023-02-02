@@ -35,8 +35,7 @@ func TestMethod3(t *testing.T) {
 ]])
     vim.bo.filetype = language
 
-    local tests, err = gettest.nodes({ scope = "all" })
-    assert.is_nil(err)
+    local tests = gettest.nodes({ scope = "all" })
 
     local want = {
       {

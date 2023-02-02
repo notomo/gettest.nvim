@@ -34,8 +34,7 @@ describe("TestMethod3", () => {
 ]])
       vim.bo.filetype = language
 
-      local tests, err = gettest.nodes({ scope = "all", tool_name = "jest" })
-      assert.is_nil(err)
+      local tests = gettest.nodes({ scope = "all", tool_name = "jest" })
 
       local want = {
         {
