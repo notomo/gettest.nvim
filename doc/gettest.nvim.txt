@@ -11,7 +11,6 @@ nodes({opts})                                                *gettest.nodes()*
 
   Return: ~
     (table) list of |gettest.nvim-test-node|
-    (string|nil) error message if error
 
 ==============================================================================
 TYPES                                                     *gettest.nvim-TYPES*
