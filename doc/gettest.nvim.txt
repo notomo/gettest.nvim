@@ -32,7 +32,10 @@ test node                                             *gettest.nvim-test-node*
 - {children} (table): children nodes. list of |gettest.nvim-test-node|
 - {full_name} (string): full name including parent node names
 - {name} (string): node name
-- {scope_node} (userdata): for example test function's node.
+- {name_nodes} (userdata[]): test name nodes including parent test nodes.
+    The last node is own name node.
+    See |treesitter-node|.
+- {scope_node} (userdata): for example, test function's node.
     See |treesitter-node|.
 
 ==============================================================================

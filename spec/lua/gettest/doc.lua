@@ -59,7 +59,10 @@ require("genvdoc").generate(full_plugin_name, {
             name = [[(string): node name]],
             full_name = [[(string): full name including parent node names]],
             children = [[(table): children nodes. list of |gettest.nvim-test-node|]],
-            scope_node = [[(userdata): for example test function's node.
+            scope_node = [[(userdata): for example, test function's node.
+    See |treesitter-node|.]],
+            name_nodes = [[(userdata[]): test name nodes including parent test nodes.
+    The last node is own name node.
     See |treesitter-node|.]],
           }
           local keys = vim.tbl_keys(descriptions)

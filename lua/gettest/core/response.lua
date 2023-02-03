@@ -27,6 +27,7 @@ function M._new_child(test, create_names)
     name = name,
     full_name = full_name,
     scope_node = test.scope_node,
+    name_nodes = test.name_nodes,
     children = vim.tbl_map(function(child)
       return M._new_child(child, create_names)
     end, test.children),

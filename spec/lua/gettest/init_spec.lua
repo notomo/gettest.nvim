@@ -51,4 +51,20 @@ end)
     local tests = gettest.nodes({ target = { path = helper.test_data.full_path .. "test.lua" } })
     assert.equal(1, #tests)
   end)
+
+  it("returns name_nodes", function()
+    helper.set_lines([[
+describe('test', function ()
+  it('test', function ()
+  end)
+end)
+]])
+    vim.bo.filetype = "lua"
+
+    local test = gettest.nodes()[1].children[1]
+    assert.equal(2, #test.name_nodes)
+
+    local row, column = test.name_nodes[#test.name_nodes]:start()
+    assert.same({ 1, 5 }, { row, column })
+  end)
 end)
