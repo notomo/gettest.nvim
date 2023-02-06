@@ -11,6 +11,13 @@ nodes({opts})                                                *gettest.nodes()*
 
   Return: ~
     (table) list of |gettest.nvim-test-node|
+    (table) information used to get tests: {
+        tool = {
+          name = (string)
+          language = (string)
+          separator = (string)
+        }
+      }
 
 ==============================================================================
 TYPES                                                     *gettest.nvim-TYPES*
