@@ -28,7 +28,15 @@ function M.filetype(self)
     return vim.bo[self.source].filetype
   end
 
-  local filetype = vim.filetype.match({ filename = self._path })
+  local bufnr = vim.fn.bufnr(("^%s$"):format(self._path))
+  if bufnr == -1 then
+    bufnr = nil
+  end
+
+  local filetype = vim.filetype.match({
+    buf = bufnr,
+    filename = self._path,
+  })
   return filetype
 end
 
