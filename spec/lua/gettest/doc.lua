@@ -2,8 +2,17 @@ local util = require("genvdoc.util")
 local plugin_name = vim.env.PLUGIN_NAME
 local full_plugin_name = plugin_name .. ".nvim"
 
+local example_target
+local example_target_path = "./lua/gettest/test/example.lua"
+do
+  local f = io.open(example_target_path, "r")
+  example_target = f:read("a")
+end
+
 local example_path = ("./spec/lua/%s/example.lua"):format(plugin_name)
 vim.o.runtimepath = vim.fn.getcwd() .. "," .. vim.o.runtimepath
+
+local example_output = vim.api.nvim_exec("luafile " .. example_path, true)
 
 local tool_names_text
 do
@@ -85,7 +94,17 @@ require("genvdoc").generate(full_plugin_name, {
     {
       name = "EXAMPLES",
       body = function()
-        return util.help_code_block_from_file(example_path, { language = "lua" })
+        local target = util.help_code_block_from_file(example_target_path, { language = "lua" })
+        local usage = util.help_code_block_from_file(example_path, { language = "lua" })
+        return ([[
+test file
+%s
+
+usage
+%s
+
+output
+%s]]):format(target, usage, util.help_code_block(example_output))
       end,
     },
   },
@@ -99,8 +118,6 @@ local gen_readme = function()
   local content = ([[
 # %s
 
-WIP
-
 This plugin provides functions to get test structures.
 
 ## Requirements
@@ -113,8 +130,21 @@ This plugin provides functions to get test structures.
 
 ## Example
 
+### test file
+
 ```lua
-%s```]]):format(full_plugin_name, tool_names_text, exmaple)
+%s```
+
+### usage
+
+```lua
+%s```
+
+### output
+
+```
+%s
+```]]):format(full_plugin_name, tool_names_text, example_target, exmaple, example_output)
 
   local readme = io.open("README.md", "w")
   readme:write(content)
