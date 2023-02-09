@@ -19,7 +19,7 @@ function M.new(tests, source, tool)
   local response_tests = vim.tbl_map(function(test)
     return M._new_child(test, create_names)
   end, tests)
-  local info = M._new_info(tool)
+  local info = M._new_info(source, tool)
   return response_tests, info
 end
 
@@ -36,11 +36,14 @@ function M._new_child(test, create_names)
   }
 end
 
-function M._new_info(tool)
+function M._new_info(source, tool)
   return {
-    name = tool.name,
-    language = tool.language,
-    separator = tool.separator,
+    source = source,
+    tool = {
+      name = tool.name,
+      language = tool.language,
+      separator = tool.separator,
+    },
   }
 end
 

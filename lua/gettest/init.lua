@@ -4,6 +4,7 @@ local M = {}
 --- @param opts table|nil: |gettest.nvim-options|
 --- @return table: list of |gettest.nvim-test-node|
 --- @return table: information used to get tests: {
+---   source = (number|string) buffer number or specified path's file content
 ---   tool = {
 ---     name = (string)
 ---     language = (string)

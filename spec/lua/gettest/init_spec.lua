@@ -67,4 +67,19 @@ end)
     local row, column = test.name_nodes[#test.name_nodes]:start()
     assert.same({ 1, 5 }, { row, column })
   end)
+
+  it("returns result infomation", function()
+    vim.bo.filetype = "lua"
+
+    local _, info = gettest.nodes()
+
+    assert.same({
+      source = vim.api.nvim_get_current_buf(),
+      tool = {
+        language = "lua",
+        name = "lua_busted",
+        separator = " ",
+      },
+    }, info)
+  end)
 end)
