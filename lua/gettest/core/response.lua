@@ -2,13 +2,11 @@ local vim = vim
 
 local M = {}
 
-local get_node_text = vim.treesitter.query.get_node_text
 function M.new(tests, source, tool)
   local create_names = function(name_nodes)
     local names = {}
     for _, name_node in ipairs(name_nodes) do
-      local text = get_node_text(name_node, source)
-      local name = tool:unwrap_string(text)
+      local name = tool:unwrap_string(name_node, source)
       table.insert(names, name)
     end
 
