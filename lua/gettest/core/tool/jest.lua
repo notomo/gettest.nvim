@@ -3,7 +3,7 @@ M.__index = M
 
 function M.new(filetype)
   local tbl = {
-    language = filetype,
+    language = filetype or "typescript",
     separator = " ",
   }
   return setmetatable(tbl, M)

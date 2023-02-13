@@ -92,4 +92,10 @@ describe("TestMethod3", () => {
       assert.test_values(tests, want)
     end)
   end
+
+  it("does not raise error even if the buffer does not have filetype", function()
+    helper.install_parser("typescript")
+
+    gettest.nodes({ tool_name = "jest" })
+  end)
 end)

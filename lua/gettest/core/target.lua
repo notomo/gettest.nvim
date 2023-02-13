@@ -25,7 +25,8 @@ end
 
 function M.filetype(self)
   if type(self.source) == "number" then
-    return vim.bo[self.source].filetype
+    local filetype = vim.bo[self.source].filetype
+    return filetype ~= "" and filetype or nil
   end
 
   local bufnr = vim.fn.bufnr(("^%s$"):format(self._path))

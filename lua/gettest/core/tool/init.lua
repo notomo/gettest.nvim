@@ -21,12 +21,14 @@ end
 function M.from(name, filetype)
   vim.validate({
     name = { name, "string" },
-    filetype = { filetype, "string" },
+    filetype = { filetype, "string", true },
   })
 
   if name ~= "" then
     return M.new(name, filetype)
   end
+
+  filetype = filetype or ""
 
   local default_tool_name = M.default_tools[filetype]
   if default_tool_name then
