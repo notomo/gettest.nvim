@@ -40,7 +40,7 @@ describe("gettest.nodes()", function()
   end)
 
   it("can return file content tests", function()
-    helper.test_data:create_file(
+    local file_path = helper.test_data:create_file(
       "test.lua",
       [[
 describe('test', function ()
@@ -48,7 +48,7 @@ end)
 ]]
     )
 
-    local tests = gettest.nodes({ target = { path = helper.test_data.full_path .. "test.lua" } })
+    local tests = gettest.nodes({ target = { path = file_path } })
     assert.equal(1, #tests)
   end)
 
