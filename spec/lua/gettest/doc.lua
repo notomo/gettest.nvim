@@ -30,59 +30,19 @@ require("genvdoc").generate(full_plugin_name, {
         return "Lua module: " .. group
       end,
       group = function(node)
-        if not node.declaration then
+        if node.declaration == nil or node.declaration.type ~= "function" then
           return nil
         end
         return node.declaration.module
       end,
     },
     {
-      name = "TYPES",
-      body = function(ctx)
-        local opts_text
-        do
-          local descriptions = {
-            target = {
-              text = [[(table | nil)]],
-              children = {
-                bufnr = [[(number | nil): Buffer number that is used if path is nil.]],
-                path = [[(string | nil): file path]],
-                row = [[(string | nil): use to calculate ancestor (1-based index)]],
-              },
-            },
-            tool_name = [[(string | nil): test tool name. |gettest.nvim-SUPPORTED-TOOLS|]],
-            scope = [[(string | nil): one of the following. (default: %s)
-  - all : returns all test nodes
-  - smallest_ancestor : returns a smallest ancestor test node from target.row
-  - largest_ancestor : returns a largest ancestor test node from target.row]],
-          }
-          local default = require("gettest.core.option").default
-          local keys = vim.tbl_keys(default)
-          local lines = util.each_keys_description(keys, descriptions, default)
-          opts_text = table.concat(lines, "\n")
+      name = "STRUCTURE",
+      group = function(node)
+        if node.declaration == nil or node.declaration.type ~= "class" then
+          return nil
         end
-
-        local test_node_text
-        do
-          local descriptions = {
-            name = [[(string): node name]],
-            full_name = [[(string): full name including parent node names]],
-            children = [[(table): children nodes. list of |gettest.nvim-test-node|]],
-            scope_node = [[(userdata): for example, test function's node.
-    See |treesitter-node|.]],
-            name_nodes = [[(userdata[]): test name nodes including parent test nodes.
-    The last node is own name node.
-    See |treesitter-node|.]],
-          }
-          local keys = vim.tbl_keys(descriptions)
-          local lines = util.each_keys_description(keys, descriptions)
-          test_node_text = table.concat(lines, "\n")
-        end
-
-        return util.sections(ctx, {
-          { name = "options", tag_name = "options", text = opts_text },
-          { name = "test node", tag_name = "test-node", text = test_node_text },
-        })
+        return "STRUCTURE"
       end,
     },
     {
