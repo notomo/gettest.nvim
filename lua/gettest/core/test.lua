@@ -25,7 +25,7 @@ local capture_handlers = {
   end,
 }
 function M.from_match(match, query)
-  local captures = require("gettest.lib.treesitter.node").get_captures(match, query, capture_handlers)
+  local captures = require("gettest.vendor.misclib.treesitter").get_captures(match, query, capture_handlers)
   return M.new(captures.scope_node, { captures.name_node })
 end
 

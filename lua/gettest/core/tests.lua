@@ -3,7 +3,7 @@ local Test = require("gettest.core.test")
 local M = {}
 
 function M.collect(source, query, language)
-  local root_node, err = require("gettest.lib.treesitter.node").get_first_tree_root(source, language)
+  local root_node, err = require("gettest.vendor.misclib.treesitter").get_first_tree_root(source, language)
   if err then
     return nil, err
   end

@@ -35,7 +35,7 @@ end
 
 function helper.install_parser(language)
   helper.use_parsers()
-  if not vim.treesitter.language.require_language(language, nil, true) then
+  if not require("gettest.vendor.misclib.treesitter").has_parser(language) then
     vim.cmd.TSInstallSync(language)
   end
 end
