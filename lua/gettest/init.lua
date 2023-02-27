@@ -8,9 +8,14 @@ local M = {}
 --- @field scope_node userdata for example, test function's node. |treesitter-node|
 
 --- @class GettestOption
---- @field scope ("all"|"smallest_ancestor"|"largest_ancestor")?
+--- @field scope GettestScope? |GettestScope|
 --- @field target GettestTarget? |GettestTarget|
 --- @field tool_name string? test tool name. |gettest.nvim-SUPPORTED-TOOLS|
+
+--- @alias GettestScope
+--- | '"all"' # returns all test nodes
+--- | '"smallest_ancestor"' # returns a smallest ancestor test node from target.row
+--- | '"largest_ancestor"' # returns a largest ancestor test node from target.row
 
 --- @class GettestTarget
 --- @field bufnr integer? buffer number that is used if path is nil

@@ -26,9 +26,16 @@ GettestNode                                                      *GettestNode*
 
 GettestOption                                                  *GettestOption*
 
-- {scope} (("all"|"smallest_ancestor"|"largest_ancestor")?)
+- {scope} (GettestScope?) |GettestScope|
 - {target} (GettestTarget?) |GettestTarget|
 - {tool_name} (string?) test tool name. |gettest.nvim-SUPPORTED-TOOLS|
+
+GettestScope                                                    *GettestScope*
+  = "all" | "smallest_ancestor" | "largest_ancestor"
+
+- "all": returns all test nodes
+- "smallest_ancestor": returns a smallest ancestor test node from target.row
+- "largest_ancestor": returns a largest ancestor test node from target.row
 
 GettestTarget                                                  *GettestTarget*
 
