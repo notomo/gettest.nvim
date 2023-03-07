@@ -33,8 +33,8 @@ local M = {}
 
 --- Get test nodes.
 --- @param opts GettestOption?: |GettestOption|
---- @return GettestNode[]: |GettestNode|
---- @return GettestInfo: information used to get tests. |GettestToolInfo|
+--- @return GettestNode[] # |GettestNode|
+--- @return GettestInfo # information used to get tests. |GettestToolInfo|
 function M.nodes(opts)
   local tests, info, err = require("gettest.command").nodes(opts)
   if err then
