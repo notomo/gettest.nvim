@@ -15,7 +15,7 @@ local literal_types = {
   "interpreted_string_literal",
   "raw_string_literal",
 }
-local get_node_text = vim.treesitter.query.get_node_text
+local get_node_text = vim.treesitter.get_node_text
 function M.unwrap_string(_, name_node, source)
   local text = get_node_text(name_node, source)
   local typ = name_node:type()
@@ -30,7 +30,7 @@ function M.build_full_name(self, names)
 end
 
 function M.build_query(self)
-  return vim.treesitter.query.parse_query(
+  return vim.treesitter.query.parse(
     self.language,
     [=[
 (function_declaration
