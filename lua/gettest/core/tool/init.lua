@@ -4,6 +4,7 @@ M.default_tools = {
   lua = "lua_busted",
   go = "go_test",
   typescript = "deno_test",
+  typescriptreact = "jest",
   javascript = "jest",
 }
 

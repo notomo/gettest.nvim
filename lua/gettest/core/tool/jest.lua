@@ -3,7 +3,7 @@ M.__index = M
 
 function M.new(filetype)
   local tbl = {
-    language = filetype or "typescript",
+    language = vim.treesitter.language.get_lang(filetype or "typescript"),
     separator = " ",
   }
   return setmetatable(tbl, M)
