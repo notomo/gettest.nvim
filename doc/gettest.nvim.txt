@@ -1,0 +1,134 @@
+*gettest.nvim.txt*
+
+==============================================================================
+Lua module: gettest                                     *gettest.nvim-gettest*
+
+nodes({opts})                                                *gettest.nodes()*
+  Get test nodes.
+
+  Parameters: ~
+    {opts} (GettestOption?) |GettestOption|
+
+  Return: ~
+    (GettestNode[]) |GettestNode|
+    (GettestInfo) information used to get tests. |GettestToolInfo|
+
+==============================================================================
+STRUCTURE                                             *gettest.nvim-STRUCTURE*
+
+GettestNode                                                      *GettestNode*
+
+- {children} (GettestNode[]) children nodes
+- {full_name} (string) full name including parent node names
+- {name} (string) node name
+- {name_nodes} (userdata[]) test name nodes including parent test nodes. The last node is own name node. |treesitter-node|
+- {scope_node} (userdata) for example, test function's node. |treesitter-node|
+
+GettestOption                                                  *GettestOption*
+
+- {scope} (GettestScope?) |GettestScope|
+- {target} (GettestTarget?) |GettestTarget|
+- {tool_name} (string?) test tool name. |gettest.nvim-SUPPORTED-TOOLS|
+
+GettestScope                                                    *GettestScope*
+  = "all" | "smallest_ancestor" | "largest_ancestor"
+
+- "all": returns all test nodes
+- "smallest_ancestor": returns a smallest ancestor test node from target.row
+- "largest_ancestor": returns a largest ancestor test node from target.row
+
+GettestTarget                                                  *GettestTarget*
+
+- {bufnr} (integer?) buffer number that is used if path is nil
+- {path} (string?) file path
+- {row} (integer?) use to calculate ancestor (1-based index)
+
+GettestInfo                                                      *GettestInfo*
+
+- {source} (integer|string) buffer number or specified path's file content
+- {tool} (GettestToolInfo) |GettestToolInfo|
+
+GettestToolInfo                                              *GettestToolInfo*
+
+- {name} (string) used test tool name
+- {language} (string) used language name
+- {separator} (string) tool name separator
+
+==============================================================================
+SUPPORTED TOOLS                                 *gettest.nvim-SUPPORTED-TOOLS*
+
+- deno_test
+- go_test
+- jest
+- lua_busted
+
+==============================================================================
+EXAMPLES                                               *gettest.nvim-EXAMPLES*
+
+test file
+>lua
+  describe("test1", function()
+    it("1-1", function()
+      assert.equal(2, 1 + 1)
+    end)
+    it("1-2", function()
+      assert.equal(2, 1 + 1)
+    end)
+  end)
+
+  describe("test2", function()
+    it("2-1", function()
+      assert.equal(2, 1 + 1)
+    end)
+  end)
+<
+
+usage
+>lua
+  local tests = require("gettest").nodes({
+    target = {
+      path = "./lua/gettest/test/example.lua",
+      -- or
+      -- bufnr = bufnr
+    },
+  })
+  print(vim.inspect(tests))
+<
+
+output
+>
+  { {
+      children = { {
+          children = {},
+          full_name = "test1 1-1",
+          name = "1-1",
+          name_nodes = { <userdata 1>, <userdata 2> },
+          scope_node = <userdata 3>
+        }, {
+          children = {},
+          full_name = "test1 1-2",
+          name = "1-2",
+          name_nodes = { <userdata 1>, <userdata 4> },
+          scope_node = <userdata 5>
+        } },
+      full_name = "test1",
+      name = "test1",
+      name_nodes = { <userdata 1> },
+      scope_node = <userdata 6>
+    }, {
+      children = { {
+          children = {},
+          full_name = "test2 2-1",
+          name = "2-1",
+          name_nodes = { <userdata 7>, <userdata 8> },
+          scope_node = <userdata 9>
+        } },
+      full_name = "test2",
+      name = "test2",
+      name_nodes = { <userdata 7> },
+      scope_node = <userdata 10>
+    } }
+<
+
+==============================================================================
+vim:tw=78:ts=8:ft=help

@@ -10,7 +10,6 @@ do
 end
 
 local example_path = ("./spec/lua/%s/example.lua"):format(plugin_name)
-vim.o.runtimepath = vim.fn.getcwd() .. "," .. vim.o.runtimepath
 
 local example_output = vim.api.nvim_exec2("luafile " .. example_path, { output = true }).output
 
