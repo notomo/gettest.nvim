@@ -3,7 +3,7 @@ local M = {}
 M.default_tools = {
   lua = "lua_busted",
   go = "go_test",
-  typescript = "deno_test",
+  typescript = "jest",
   typescriptreact = "jest",
   javascript = "jest",
 }
