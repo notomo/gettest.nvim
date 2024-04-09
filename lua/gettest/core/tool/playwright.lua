@@ -41,7 +41,7 @@ function M.build_query(self)
 (call_expression
   function: (member_expression
     object: (identifier) @test.keyword1 (#match? @test.keyword1 "test")
-    property: (property_identifier) @test.keyword2 (#match? @test.keyword2 "describe")
+    property: (property_identifier) @test.keyword2 (#any-of? @test.keyword2 "describe" "skip" "only" "step" "fixme" "fail")
   )
   arguments: (arguments
     .

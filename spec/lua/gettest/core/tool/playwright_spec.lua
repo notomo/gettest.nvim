@@ -21,6 +21,17 @@ test.describe("TestMethod2", () => {
 
 test.describe("TestMethod3", () => {
 });
+
+test.skip("TestSkipped", () => {
+});
+
+test.describe("TestStepped", async () => {
+    await test.step("step1", () => {
+    })
+
+    await test.step("step2", () => {
+    })
+});
 ]])
     vim.bo.filetype = "typescript"
 
@@ -58,6 +69,31 @@ test.describe("TestMethod3", () => {
         full_name = "TestMethod3",
         row = helper.get_row("TestMethod3"),
         children = {},
+      },
+      {
+        name = "TestSkipped",
+        full_name = "TestSkipped",
+        row = helper.get_row("TestSkipped"),
+        children = {},
+      },
+      {
+        name = "TestStepped",
+        full_name = "TestStepped",
+        row = helper.get_row("TestStepped"),
+        children = {
+          {
+            name = "step1",
+            full_name = "TestStepped step1",
+            row = helper.get_row("step1"),
+            children = {},
+          },
+          {
+            name = "step2",
+            full_name = "TestStepped step2",
+            row = helper.get_row("step2"),
+            children = {},
+          },
+        },
       },
     }
     assert.test_values(tests, want)
