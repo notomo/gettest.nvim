@@ -48,14 +48,17 @@ local function as_value(test)
     name = test.name,
     full_name = test.full_name,
     row = row + 1,
-    children = vim.tbl_map(function(child)
-      return as_value(child)
-    end, test.children),
+    children = vim
+      .iter(test.children)
+      :map(function(child)
+        return as_value(child)
+      end)
+      :totable(),
   }
 end
 
 asserts.create("test_values"):register_same(function(tests)
-  return vim.tbl_map(as_value, tests)
+  return vim.iter(tests):map(as_value):totable()
 end)
 
 return helper

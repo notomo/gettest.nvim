@@ -14,9 +14,12 @@ function M.new(tests, source, tool)
     return name, tool:build_full_name(names)
   end
 
-  local response_tests = vim.tbl_map(function(test)
-    return M._new_child(test, create_names)
-  end, tests)
+  local response_tests = vim
+    .iter(tests)
+    :map(function(test)
+      return M._new_child(test, create_names)
+    end)
+    :totable()
   local info = M._new_info(source, tool)
   return response_tests, info
 end
@@ -28,9 +31,12 @@ function M._new_child(test, create_names)
     full_name = full_name,
     scope_node = test.scope_node,
     name_nodes = test.name_nodes,
-    children = vim.tbl_map(function(child)
-      return M._new_child(child, create_names)
-    end, test.children),
+    children = vim
+      .iter(test.children)
+      :map(function(child)
+        return M._new_child(child, create_names)
+      end)
+      :totable(),
   }
 end
 

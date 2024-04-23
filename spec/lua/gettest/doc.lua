@@ -15,9 +15,12 @@ local example_output = vim.api.nvim_exec2("luafile " .. example_path, { output =
 
 local tool_names_text
 do
-  local tool_names = vim.tbl_map(function(name)
-    return ("- %s"):format(name)
-  end, require("gettest.core.tool").all_names())
+  local tool_names = vim
+    .iter(require("gettest.core.tool").all_names())
+    :map(function(name)
+      return ("- %s"):format(name)
+    end)
+    :totable()
   tool_names_text = table.concat(tool_names, "\n")
 end
 
