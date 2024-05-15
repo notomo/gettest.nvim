@@ -73,9 +73,7 @@ output
 })
 
 local gen_readme = function()
-  local f = io.open(example_path, "r")
-  local exmaple = f:read("*a")
-  f:close()
+  local exmaple = util.read_all(example_path)
 
   local content = ([[
 # %s
@@ -108,8 +106,6 @@ This plugin provides functions to get test structures.
 %s
 ```]]):format(full_plugin_name, tool_names_text, example_target, exmaple, example_output)
 
-  local readme = io.open("README.md", "w")
-  readme:write(content)
-  readme:close()
+  util.write("README.md", content)
 end
 gen_readme()
