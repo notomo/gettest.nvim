@@ -8,10 +8,11 @@ M.default_tools = {
   javascript = "jest",
 }
 
+--- @return table|string
 function M.new(name, filetype)
   local tool_module = require("gettest.vendor.misclib.module").find("gettest.core.tool." .. name)
   if not tool_module then
-    return nil, ("no tool for tool_name: `%s`"):format(name)
+    return ("no tool for tool_name: `%s`"):format(name)
   end
 
   local tool = tool_module.new(filetype)
@@ -36,7 +37,7 @@ function M.from(name, filetype)
     return M.new(default_tool_name, filetype)
   end
 
-  return nil, ("no tools for language: `%s`"):format(filetype)
+  return ("no tools for language: `%s`"):format(filetype)
 end
 
 function M.all_names()

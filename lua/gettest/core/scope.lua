@@ -19,11 +19,11 @@ function M.new(scope)
 
   local filter_by_scope = filters[scope]
   if filter_by_scope then
-    return filter_by_scope, nil
+    return filter_by_scope
   end
 
   local names = table.concat(M.all_names(), "|")
-  return nil, ("scope must be %s, but actual: %s"):format(names, scope)
+  return ("scope must be %s, but actual: %s"):format(names, scope)
 end
 
 function M.all_names()

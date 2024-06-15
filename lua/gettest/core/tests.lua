@@ -5,7 +5,7 @@ local M = {}
 function M.collect(source, query, language)
   local root_node, err = require("gettest.vendor.misclib.treesitter").get_first_tree_root(source, language)
   if err then
-    return nil, err
+    return err
   end
 
   local root = Test.new(root_node)
@@ -13,7 +13,7 @@ function M.collect(source, query, language)
     local test = Test.from_match(match, query)
     root:add(test)
   end
-  return root.children, nil
+  return root.children
 end
 
 function M.get_largest_from(tests, row)

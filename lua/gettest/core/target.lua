@@ -8,7 +8,7 @@ function M.new(raw_target)
   if raw_target.path then
     local str, err = require("gettest.lib.file").read_all(raw_target.path)
     if err then
-      return nil, err
+      return err
     end
     source = str
   else

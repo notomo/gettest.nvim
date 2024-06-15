@@ -10,19 +10,22 @@ function M.new(raw_opts)
   vim.validate({ raw_opts = { raw_opts, "table", true } })
   local opts = vim.tbl_deep_extend("force", M.default, raw_opts or {})
 
-  local target, err = require("gettest.core.target").new(opts.target)
-  if err then
-    return nil, err
+  local target = require("gettest.core.target").new(opts.target)
+  if type(target) == "string" then
+    local err = target
+    return err
   end
 
-  local tool, tool_err = require("gettest.core.tool").from(opts.tool_name, target:filetype())
-  if tool_err then
-    return nil, tool_err
+  local tool = require("gettest.core.tool").from(opts.tool_name, target:filetype())
+  if type(tool) == "string" then
+    local err = tool
+    return err
   end
 
-  local filter_by_scope, scope_err = require("gettest.core.scope").new(opts.scope)
-  if scope_err then
-    return nil, scope_err
+  local filter_by_scope = require("gettest.core.scope").new(opts.scope)
+  if type(filter_by_scope) == "string" then
+    local err = filter_by_scope
+    return err
   end
 
   return {
