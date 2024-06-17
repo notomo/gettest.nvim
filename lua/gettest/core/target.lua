@@ -29,7 +29,7 @@ function M.filetype(self)
     return filetype ~= "" and filetype or nil
   end
 
-  local bufnr = vim.fn.bufnr(("^%s$"):format(self._path))
+  local bufnr = vim.fn.bufnr(("^%s$"):format(self._path)) ---@type integer|nil
   if bufnr == -1 then
     bufnr = nil
   end

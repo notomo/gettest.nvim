@@ -36,11 +36,12 @@ local M = {}
 --- @return GettestNode[] # |GettestNode|
 --- @return GettestInfo # information used to get tests. |GettestToolInfo|
 function M.nodes(opts)
-  local tests, info, err = require("gettest.command").nodes(opts)
-  if err then
+  local response = require("gettest.command").nodes(opts)
+  if type(response) == "string" then
+    local err = response
     require("gettest.vendor.misclib.message").error(err)
   end
-  return tests, info
+  return response.tests, response.info
 end
 
 return M

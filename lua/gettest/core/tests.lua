@@ -16,6 +16,7 @@ function M.collect(source, query, language)
   return root.children
 end
 
+--- @param tests GetTestTest[]
 function M.get_largest_from(tests, row)
   for _, test in ipairs(tests) do
     if test:contains_row(row) then
@@ -24,6 +25,7 @@ function M.get_largest_from(tests, row)
   end
 end
 
+--- @param tests GetTestTest[]
 function M.get_smallest_from(tests, row)
   for _, test in ipairs(tests) do
     if test:contains_row(row) then

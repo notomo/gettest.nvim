@@ -2,6 +2,10 @@ local vim = vim
 
 local M = {}
 
+--- @param tests GetTestTest[]
+--- @param tool GetTestTool
+--- @return GettestNode[]
+--- @return GettestInfo
 function M.new(tests, source, tool)
   local create_names = function(name_nodes)
     local names = {}
@@ -24,6 +28,7 @@ function M.new(tests, source, tool)
   return response_tests, info
 end
 
+--- @param test GetTestTest
 function M._new_child(test, create_names)
   local name, full_name = create_names(test.name_nodes)
   return {
@@ -40,6 +45,7 @@ function M._new_child(test, create_names)
   }
 end
 
+--- @param tool GetTestTool
 function M._new_info(source, tool)
   return {
     source = source,

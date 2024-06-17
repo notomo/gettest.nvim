@@ -8,7 +8,14 @@ M.default_tools = {
   javascript = "jest",
 }
 
---- @return table|string
+--- @class GetTestTool
+--- @field build_query fun(self:GetTestTool):TSQuery
+--- @field unwrap_string fun(self:GetTestTool,name_node:TSNode,source:integer|string):string
+--- @field build_full_name fun(self:GetTestTool,names:string[]):string
+--- @field language string
+--- @field separator string
+
+--- @return GetTestTool|string
 function M.new(name, filetype)
   local tool_module = require("gettest.vendor.misclib.module").find("gettest.core.tool." .. name)
   if not tool_module then

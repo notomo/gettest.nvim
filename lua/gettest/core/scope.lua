@@ -14,6 +14,7 @@ local filters = {
   end,
 }
 
+--- @return (fun(tests:GetTestTest[],row:integer):GetTestTest[])|string
 function M.new(scope)
   vim.validate({ scope = { scope, "string" } })
 

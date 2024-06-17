@@ -1,5 +1,9 @@
 local vim = vim
 
+--- @class GetTestTest
+--- @field scope_node TSNode
+--- @field name_nodes TSNode[]
+--- @field children GetTestTest[]
 local M = {}
 M.__index = M
 
@@ -29,6 +33,7 @@ function M.from_match(match, query)
   return M.new(captures.scope_node, { captures.name_node })
 end
 
+--- @param test GetTestTest
 function M.add(self, test)
   if not self:contains(test) then
     return false
@@ -51,6 +56,7 @@ function M.add(self, test)
   return true
 end
 
+--- @param test GetTestTest
 function M.contains(self, test)
   local range = { vim.treesitter.get_node_range(test.scope_node) }
   return vim.treesitter.node_contains(self.scope_node, range)
