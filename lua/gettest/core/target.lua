@@ -6,9 +6,10 @@ function M.new(raw_target)
 
   local source
   if raw_target.path then
-    local str, err = require("gettest.lib.file").read_all(raw_target.path)
-    if err then
-      return err
+    local str = require("gettest.lib.file").read_all(raw_target.path)
+    if type(str) == "table" then
+      local err = str
+      return err.message
     end
     source = str
   else
