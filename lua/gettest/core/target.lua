@@ -30,13 +30,8 @@ function M.filetype(self)
     return filetype ~= "" and filetype or nil
   end
 
-  local bufnr = vim.fn.bufnr(("^%s$"):format(self._path)) ---@type integer|nil
-  if bufnr == -1 then
-    bufnr = nil
-  end
-
   local filetype = vim.filetype.match({
-    buf = bufnr,
+    buf = require("gettest.vendor.misclib.buffer").find(self._path),
     filename = self._path,
   })
   return filetype
