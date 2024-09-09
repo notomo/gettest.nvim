@@ -1,5 +1,6 @@
 local helper = require("gettest.test.helper")
 local gettest = helper.require("gettest")
+local assert = helper.typed_assert(assert)
 
 describe("with deno_test,", function()
   before_each(helper.before_each)
