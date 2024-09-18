@@ -19,6 +19,7 @@ This plugin provides functions to get test structures.
 ### test file
 
 ```lua
+---@diagnostic disable: undefined-field
 describe("test1", function()
   it("1-1", function()
     assert.equal(2, 1 + 1)

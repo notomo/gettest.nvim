@@ -6,6 +6,7 @@ local example_target
 local example_target_path = "./lua/gettest/test/example.lua"
 do
   local f = io.open(example_target_path, "r")
+  assert(f)
   example_target = f:read("a")
 end
 

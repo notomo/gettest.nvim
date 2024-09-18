@@ -9,6 +9,7 @@ M.default_tools = {
 }
 
 --- @class GetTestTool
+--- @field name string
 --- @field build_query fun(self:GetTestTool):TSQuery
 --- @field unwrap_string fun(self:GetTestTool,name_node:TSNode,source:integer|string):string
 --- @field build_full_name fun(self:GetTestTool,names:string[]):string
