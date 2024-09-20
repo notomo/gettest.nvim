@@ -32,7 +32,7 @@ function helper.get_row(pattern)
 end
 
 function helper.use_parsers()
-  vim.o.runtimepath = helper.root .. "/spec/lua/nvim-treesitter," .. vim.o.runtimepath
+  vim.cmd.packadd("nvim-treesitter")
   vim.cmd.runtime([[plugin/nvim-treesitter.*]])
 end
 
