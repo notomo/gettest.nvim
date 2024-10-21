@@ -1,9 +1,8 @@
 local M = {}
 M.__index = M
 
+--- @param raw_target table
 function M.new(raw_target)
-  vim.validate({ raw_target = { raw_target, "table" } })
-
   local source
   if raw_target.path then
     local str = require("gettest.lib.file").read_all(raw_target.path)

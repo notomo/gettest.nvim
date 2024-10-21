@@ -14,10 +14,9 @@ local filters = {
   end,
 }
 
+--- @param scope string
 --- @return (fun(tests:GetTestTest[],row:integer):GetTestTest[])|string
 function M.new(scope)
-  vim.validate({ scope = { scope, "string" } })
-
   local filter_by_scope = filters[scope]
   if filter_by_scope then
     return filter_by_scope

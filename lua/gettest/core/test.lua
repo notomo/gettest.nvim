@@ -7,11 +7,9 @@ local vim = vim
 local M = {}
 M.__index = M
 
+--- @param scope_node userdata
+--- @param name_nodes table[]?
 function M.new(scope_node, name_nodes)
-  vim.validate({
-    scope_node = { scope_node, "userdata" },
-    name_nodes = { name_nodes, "table", true },
-  })
   local tbl = {
     scope_node = scope_node,
     name_nodes = name_nodes or {},

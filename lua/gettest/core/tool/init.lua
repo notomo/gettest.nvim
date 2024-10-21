@@ -28,12 +28,9 @@ function M.new(name, filetype)
   return tool
 end
 
+--- @param name string
+--- @param filetype string?
 function M.from(name, filetype)
-  vim.validate({
-    name = { name, "string" },
-    filetype = { filetype, "string", true },
-  })
-
   if name ~= "" then
     return M.new(name, filetype)
   end

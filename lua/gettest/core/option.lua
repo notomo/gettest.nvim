@@ -7,7 +7,6 @@ M.default = {
 }
 
 function M.new(raw_opts)
-  vim.validate({ raw_opts = { raw_opts, "table", true } })
   local opts = vim.tbl_deep_extend("force", M.default, raw_opts or {})
 
   local target = require("gettest.core.target").new(opts.target)
