@@ -3,8 +3,9 @@ local Test = require("gettest.core.test")
 local M = {}
 
 function M.collect(source, query, language)
-  local root_node, err = require("gettest.vendor.misclib.treesitter").get_first_tree_root(source, language)
-  if err then
+  local root_node = require("gettest.vendor.misclib.treesitter").get_first_tree_root(source, language)
+  if type(root_node) == "string" then
+    local err = root_node
     return err
   end
 
