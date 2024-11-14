@@ -39,7 +39,7 @@ function M.nodes(opts)
   local response = require("gettest.command").nodes(opts)
   if type(response) == "string" then
     local err = response
-    require("gettest.vendor.misclib.message").error(err)
+    error("[gettest] " .. err, 0)
   end
   return response.tests, response.info
 end
