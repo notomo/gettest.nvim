@@ -57,6 +57,7 @@ GettestToolInfo                                              *GettestToolInfo*
 ==============================================================================
 SUPPORTED TOOLS                                 *gettest.nvim-SUPPORTED-TOOLS*
 
+- cargo_test
 - deno_test
 - go_test
 - jest

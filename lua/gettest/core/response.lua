@@ -6,7 +6,7 @@ local M = {}
 --- @param tool GetTestTool
 --- @return GettestNode[]
 --- @return GettestInfo
-function M.new(tests, source, tool)
+function M.new(tests, source, path, tool)
   local create_names = function(name_nodes)
     local names = {}
     for _, name_node in ipairs(name_nodes) do
@@ -15,7 +15,7 @@ function M.new(tests, source, tool)
     end
 
     local name = names[#names]
-    return name, tool:build_full_name(names)
+    return name, tool:build_full_name(names, path)
   end
 
   local response_tests = vim

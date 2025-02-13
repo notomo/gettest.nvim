@@ -6,13 +6,14 @@ M.default_tools = {
   typescript = "jest",
   typescriptreact = "jest",
   javascript = "jest",
+  rust = "cargo_test",
 }
 
 --- @class GetTestTool
 --- @field name string
 --- @field build_query fun(self:GetTestTool):TSQuery
 --- @field unwrap_string fun(self:GetTestTool,name_node:TSNode,source:integer|string):string
---- @field build_full_name fun(self:GetTestTool,names:string[]):string
+--- @field build_full_name fun(self:GetTestTool,names:string[],path:string):string
 --- @field language string
 --- @field separator string
 

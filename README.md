@@ -8,6 +8,7 @@ This plugin provides functions to get test structures.
 
 ## Supported tools
 
+- cargo_test
 - deno_test
 - go_test
 - jest
