@@ -75,8 +75,8 @@ function M.build_query(self)
   .
   (function_item
     name: (identifier) @test.name
-  )
-) @test.scope
+  ) @test.scope
+)
 ]=]
   )
 end
