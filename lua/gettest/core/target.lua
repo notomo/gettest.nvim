@@ -1,7 +1,7 @@
 local M = {}
 M.__index = M
 
---- @param raw_target table
+--- @param raw_target GettestTarget
 function M.new(raw_target)
   local source
   local path
@@ -33,7 +33,7 @@ function M.filetype(self)
   end
 
   local filetype = vim.filetype.match({
-    buf = require("gettest.vendor.misclib.buffer").find(self._path),
+    buf = require("gettest.vendor.misclib.buffer").find(self.path),
     filename = self.path,
   })
   return filetype
