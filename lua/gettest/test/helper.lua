@@ -21,12 +21,10 @@ function helper.set_lines(str)
 end
 
 function helper.get_row(pattern)
-  local saved = vim.fn.winsaveview()
-  local row = vim.fn.search(pattern)
+  local row = vim.fn.search(pattern, "n")
   if row == 0 then
     error(("not found pattern: `%s`"):format(pattern))
   end
-  vim.fn.winrestview(saved)
   return row
 end
 
@@ -39,7 +37,8 @@ end
 local asserts = require("vusted.assert").asserts
 
 local function as_value(test)
-  local row = test.scope_node:start()
+  local name_node = test.name_nodes[#test.name_nodes]
+  local row = name_node:start()
   return {
     name = test.name,
     full_name = test.full_name,
