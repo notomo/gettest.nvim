@@ -52,6 +52,9 @@ function M.build_full_name(self, names, path)
   if elements[1] == "lib" then
     table.remove(elements, 1)
   end
+  if elements[1] == "main" then
+    table.remove(elements, 1)
+  end
 
   return table.concat(elements, self.separator)
 end
