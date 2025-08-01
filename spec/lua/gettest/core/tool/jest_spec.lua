@@ -20,7 +20,7 @@ describe("TestMethod1", () => {
   describe("12", () => {
     it("should return 121", async () => {
     });
-    it("should return 122", async () => {
+    test("should return 122", async () => {
     });
   });
 });

@@ -31,7 +31,7 @@ function M.build_query(self)
     self.language,
     [=[
 (call_expression
-  function: (identifier) @test (#any-of? @test "describe" "it")
+  function: (identifier) @test (#any-of? @test "describe" "it" "test")
   arguments: (arguments
     .
     (_) @test.name
