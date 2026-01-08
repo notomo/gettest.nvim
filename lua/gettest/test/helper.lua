@@ -7,8 +7,22 @@ require("assertlib").register(require("vusted.assert").register)
 
 function helper.before_each()
   vim.cmd.packadd("nvim-treesitter")
-  vim.g.loaded_nvim_treesitter = nil
-  vim.cmd.runtime([[plugin/nvim-treesitter.lua]])
+  require("nvim-treesitter").setup({
+    install_dir = vim.fs.joinpath(helper.root, "spec/.shared/packages/pack/testpack/opt/nvim-treesitter"),
+  })
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "TSUpdate",
+    callback = function()
+      require("nvim-treesitter.parsers").moonbit = {
+        tier = 3,
+        install_info = {
+          revision = "a5a7e0b9cb2db740cfcc4232b2f16493b42a0c82",
+          url = "https://github.com/moonbitlang/tree-sitter-moonbit",
+          queries = "queries",
+        },
+      }
+    end,
+  })
 end
 
 function helper.after_each()
@@ -30,7 +44,7 @@ end
 
 function helper.install_parser(language)
   if not require("gettest.vendor.misclib.treesitter").has_parser(language) then
-    vim.cmd.TSInstallSync(language)
+    require("nvim-treesitter").install({ language }, { summary = true }):wait(300000)
   end
 end
 

@@ -7,6 +7,7 @@ M.default_tools = {
   typescriptreact = "jest",
   javascript = "jest",
   rust = "cargo_test",
+  moonbit = "moon_test",
 }
 
 --- @class GetTestTool
