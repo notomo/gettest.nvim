@@ -62,6 +62,7 @@ SUPPORTED TOOLS                                 *gettest.nvim-SUPPORTED-TOOLS*
 - go_test
 - jest
 - lua_busted
+- moon_test
 - playwright
 
 ==============================================================================

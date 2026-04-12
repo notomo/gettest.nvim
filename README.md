@@ -13,6 +13,7 @@ This plugin provides functions to get test structures.
 - go_test
 - jest
 - lua_busted
+- moon_test
 - playwright
 
 ## Example
