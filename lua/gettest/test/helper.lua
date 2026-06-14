@@ -5,10 +5,18 @@ helper.root = helper.find_plugin_root(plugin_name)
 vim.opt.packpath:prepend(vim.fs.joinpath(helper.root, "spec/.shared/packages"))
 require("assertlib").register(require("ntf.assert").register)
 
+-- Parsers are installed here (by spec/lua/gettest/install_parsers.lua, run before
+-- the ntf suite) and added to runtimepath so ntf's `nvim --clean` workers can find
+-- them: --clean drops the default stdpath user-site dir, and the workers cannot
+-- install parsers themselves (the install runs as an async job that does not
+-- complete inside them).
+helper.parser_dir = vim.fs.joinpath(helper.root, "spec/.shared/ts-parsers")
+
 function helper.before_each()
   vim.cmd.packadd("nvim-treesitter")
+  vim.opt.runtimepath:append(helper.parser_dir)
   require("nvim-treesitter").setup({
-    install_dir = vim.fs.joinpath(helper.root, "spec/.shared/packages/pack/testpack/opt/nvim-treesitter"),
+    install_dir = helper.parser_dir,
   })
   vim.api.nvim_create_autocmd("User", {
     pattern = "TSUpdate",
