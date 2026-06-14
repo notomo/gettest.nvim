@@ -1,10 +1,15 @@
+local ntf = require("ntf")
+local describe, it, before_each, after_each, setup, teardown =
+  ntf.describe, ntf.it, ntf.before_each, ntf.after_each, ntf.setup, ntf.teardown
 local helper = require("gettest.test.helper")
-local gettest = helper.require("gettest")
-local assert = helper.typed_assert(assert)
+local gettest = require("gettest")
+local assert = helper.typed_assert(ntf.assert)
 
 describe("gettest.nodes()", function()
   before_each(function()
-    helper.test_data = require("gettest.vendor.misclib.test.data_dir").setup(helper.root)
+    helper.test_data = require("gettest.vendor.misclib.test.data_dir").setup(helper.root, {
+      base_dir = ("test_data_%d/"):format(vim.fn.getpid()),
+    })
     helper.before_each()
   end)
   after_each(function()

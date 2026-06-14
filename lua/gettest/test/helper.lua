@@ -1,9 +1,9 @@
-local helper = require("vusted.helper")
+local helper = require("ntf.helper")
 local plugin_name = helper.get_module_root(...)
 
 helper.root = helper.find_plugin_root(plugin_name)
 vim.opt.packpath:prepend(vim.fs.joinpath(helper.root, "spec/.shared/packages"))
-require("assertlib").register(require("vusted.assert").register)
+require("assertlib").register(require("ntf.assert").register)
 
 function helper.before_each()
   vim.cmd.packadd("nvim-treesitter")
@@ -25,10 +25,7 @@ function helper.before_each()
   })
 end
 
-function helper.after_each()
-  helper.cleanup()
-  helper.cleanup_loaded_modules(plugin_name)
-end
+function helper.after_each() end
 
 function helper.set_lines(str)
   vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(str, "\n"))
@@ -48,7 +45,7 @@ function helper.install_parser(language)
   end
 end
 
-local asserts = require("vusted.assert").asserts
+local assert = require("ntf.assert")
 
 local function as_value(test)
   local name_node = test.name_nodes[#test.name_nodes]
@@ -66,7 +63,7 @@ local function as_value(test)
   }
 end
 
-asserts.create("test_values"):register_same(function(tests)
+assert.register_same("test_values", function(tests)
   return vim.iter(tests):map(as_value):totable()
 end)
 

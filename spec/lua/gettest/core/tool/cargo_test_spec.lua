@@ -1,6 +1,8 @@
+local ntf = require("ntf")
+local describe, it, before_each, after_each = ntf.describe, ntf.it, ntf.before_each, ntf.after_each
 local helper = require("gettest.test.helper")
-local gettest = helper.require("gettest")
-local assert = helper.typed_assert(assert)
+local gettest = require("gettest")
+local assert = helper.typed_assert(ntf.assert)
 
 local language = "rust"
 
