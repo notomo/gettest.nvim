@@ -75,8 +75,8 @@ assert.register_same("test_values", function(tests)
   return vim.iter(tests):map(as_value):totable()
 end)
 
-function helper.typed_assert(assert)
-  local x = require("assertlib").typed(assert)
+function helper.typed_assert(raw_assert)
+  local x = require("assertlib").typed(raw_assert)
   ---@cast x +{test_values:fun(tests,want)}
   return x
 end
