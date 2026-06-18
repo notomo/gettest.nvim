@@ -7,9 +7,7 @@ local assert = helper.typed_assert(ntf.assert)
 
 describe("gettest.nodes()", function()
   before_each(function()
-    helper.test_data = require("gettest.vendor.misclib.test.data_dir").setup(helper.root, {
-      base_dir = ("test_data_%d/"):format(vim.fn.getpid()),
-    })
+    helper.test_data = require("gettest.vendor.misclib.test.data_dir").setup(helper.root, { base_dir = "spec/test_data/" })
     helper.before_each()
   end)
   after_each(function()
