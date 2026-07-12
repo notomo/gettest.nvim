@@ -14,4 +14,4 @@ deps: nvim-treesitter
 test: FORCE deps
 	$(MAKE) requireall
 	nvim --headless -i NONE -n +"luafile ${SPEC_DIR}/install_parsers.lua" +"quitall!"
-	$(NTF) --shuffle ${SPEC_DIR}
+	$(NTF) ${SPEC_DIR}
